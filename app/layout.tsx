@@ -6,6 +6,7 @@ import './globals.css'
 import '../public/style.css' // Preserve traditional styling
 import '../public/shop.css' // Shop styling
 import ClientAnimations from '@/components/ClientAnimations'
+import { Providers } from '@/components/Providers'
 
 const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
@@ -15,6 +16,10 @@ export const metadata: Metadata = {
   description: 'Soluciones corporativas, computadores, licencias Microsoft, soporte técnico y más.',
 }
 
+import { Toaster } from '@/components/ui/toaster'
+import FloatingSidebar from '@/components/FloatingSidebar'
+import BottomNav from '@/components/BottomNav'
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -23,7 +28,12 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className="font-sans antialiased">
-        {children}
+        <Providers>
+          {children}
+          <Toaster />
+          <FloatingSidebar />
+          <BottomNav />
+        </Providers>
         <ClientAnimations />
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>

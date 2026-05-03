@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function Footer() {
   const [year, setYear] = useState<number>(new Date().getFullYear())
@@ -15,7 +16,7 @@ export default function Footer() {
       <div className="container">
         <div className="footer-grid">
           <div className="footer-col">
-            <h5>Enlaces Rápidos</h5>
+            <h2 className="footer-col-title">Enlace Rápidos</h2>
             <ul>
               <li><Link href="/">Inicio</Link></li>
               <li><Link href="/#nosotros">Nosotros</Link></li>
@@ -25,7 +26,7 @@ export default function Footer() {
             </ul>
           </div>
           <div className="footer-col">
-            <h5>Servicios</h5>
+            <h2 className="footer-col-title">Servicios</h2>
             <ul>
               <li><Link href="/tienda">Computadores</Link></li>
               <li><Link href="/#servicios">Licencias Microsoft</Link></li>
@@ -34,13 +35,19 @@ export default function Footer() {
             </ul>
           </div>
           <div className="footer-col" id="soporte">
-            <h5>Soporte y Contacto</h5>
+            <h2 className="footer-col-title">Soporte y Contacto</h2>
             <ul className="contact-list">
               <li>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="18" height="18">
                   <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
                 </svg>
                 <a href="tel:+573144874534">314 4874534</a>
+              </li>
+              <li>
+                <svg viewBox="0 0 32 32" width="18" height="18" fill="#25D366">
+                  <path d="M16.004 0C7.165 0 0 7.163 0 16.001c0 2.822.736 5.578 2.137 8.012L.072 32l8.17-2.14A15.94 15.94 0 0016.004 32C24.837 32 32 24.837 32 16.001 32 7.163 24.837 0 16.004 0zm0 29.39a13.36 13.36 0 01-6.81-1.864l-.488-.29-5.065 1.328 1.35-4.937-.318-.504A13.32 13.32 0 012.61 16.001c0-7.39 6.006-13.397 13.394-13.397 7.39 0 13.396 6.007 13.396 13.397 0 7.392-6.006 13.389-13.396 13.389zm7.346-10.03c-.403-.201-2.383-1.175-2.752-1.31-.37-.133-.639-.2-.908.202-.269.4-1.042 1.31-1.278 1.578-.235.27-.47.303-.873.101-.403-.2-1.702-.627-3.242-2-.198-.178-1.72-1.538-2.058-2.443-.235-.49.013-.643.177-.849.17-.184.38-.48.57-.72.19-.24.253-.41.38-.683.126-.27.063-.506-.033-.708-.095-.2-.907-2.189-1.243-2.995-.327-.787-.66-.68-.907-.692-.235-.012-.504-.014-.773-.014s-.707.1-1.078.5c-.37.4-1.413 1.38-1.413 3.368s1.447 3.905 1.649 4.175c.2.27 2.847 4.344 6.898 6.09.964.416 1.716.664 2.302.85.967.307 1.848.264 2.544.16.776-.116 2.383-.974 2.719-1.914.336-.94.336-1.746.235-1.914-.1-.168-.37-.268-.773-.47z"/>
+                </svg>
+                <a href="https://wa.me/573144874534" target="_blank" rel="noopener noreferrer">WhatsApp: 314 4874534</a>
               </li>
               <li>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="18" height="18">
@@ -59,7 +66,7 @@ export default function Footer() {
             </ul>
           </div>
           <div className="footer-col">
-            <h5>Síguenos</h5>
+            <h2 className="footer-col-title">Síguenos</h2>
             <div className="social-links">
               <a href="#" aria-label="Instagram">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="20" height="20">
@@ -82,7 +89,7 @@ export default function Footer() {
                 style={{ border: 0, filter: 'grayscale(1) invert(0.9) contrast(1.2)' }} 
                 allowFullScreen={false}
                 loading="lazy" 
-                title="Google Maps">
+                title="Ubicación de FANGAN TECH en Google Maps">
               </iframe>
             </div>
           </div>
@@ -90,11 +97,13 @@ export default function Footer() {
 
         <div className="footer-bottom">
           <div className="footer-logo">
-            <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect width="40" height="40" fill="white"/>
-              <path d="M10 12H30V14H10V12ZM10 19H25V21H10V19ZM10 26H30V28H10V26Z" fill="black"/>
-            </svg>
-            <span>FANGAN TECH</span>
+            <Image
+              src="/logo-largo.png"
+              alt="FANGAN TECH - Tecnología que Transforma"
+              width={160}
+              height={45}
+              style={{ height: 'auto', maxHeight: '40px', width: 'auto', filter: 'brightness(0) invert(1)' }}
+            />
           </div>
           
           <div className="footer-legal-block">
@@ -111,11 +120,17 @@ export default function Footer() {
                 alignItems: 'center', 
                 marginTop: '10px',
                 fontWeight: '600',
-                fontSize: '0.8rem'
+                fontSize: '0.85rem',
+                opacity: '0.8',
+                transition: 'opacity 0.2s'
               }}
+              onMouseEnter={(e) => (e.currentTarget.style.opacity = '1')}
+              onMouseLeave={(e) => (e.currentTarget.style.opacity = '0.8')}
             >
               Desarrollado por K&T 
-              <span style={{ color: '#ffffff', marginLeft: '5px' }}>❤️</span>
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="#ffffff" style={{ marginLeft: '6px' }}>
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+              </svg>
             </a>
           </div>
         </div>

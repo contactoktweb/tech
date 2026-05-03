@@ -5,12 +5,14 @@ import ShopCta from '@/components/shop/ShopCta'
 import TopBar from '@/components/TopBar'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import FloatingSidebar from '@/components/FloatingSidebar'
 
 export default function TiendaPage() {
   return (
     <>
       <TopBar />
       <Header />
+      <FloatingSidebar />
       <main>
         <ShopHero />
         <section className="shop-main">

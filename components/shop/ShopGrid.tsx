@@ -2,12 +2,19 @@
 
 import React from 'react'
 import { useRouter } from 'next/navigation'
+import { useCart } from '@/context/CartContext'
 
 export default function ShopGrid() {
   const router = useRouter()
+  const { addToCart } = useCart()
   
   const handleProductClick = () => {
-    router.push('/producto') // Updated path to Next.js route
+    router.push('/producto')
+  }
+
+  const handleAddToCart = (e: React.MouseEvent, product: any) => {
+    e.stopPropagation()
+    addToCart(product)
   }
 
   return (
@@ -41,7 +48,16 @@ export default function ShopGrid() {
             <div className="product-pricing">
               <span className="product-price">$4.890.000</span>
             </div>
-            <button className="btn btn-primary btn-block btn-add-cart">
+            <button 
+              className="btn btn-primary btn-block btn-add-cart"
+              onClick={(e) => handleAddToCart(e, {
+                id: 'hp-elitebook-840',
+                name: 'HP EliteBook 840 G9',
+                price: 4890000,
+                image: '/images/product-laptop-hp.jpg',
+                specs: 'Intel Core i7, 16GB RAM, 512GB SSD'
+              })}
+            >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M6 6h15l-1.5 9h-12z" />
                 <circle cx="9" cy="20" r="1" />
@@ -66,7 +82,16 @@ export default function ShopGrid() {
               <span className="product-price-old">$8.500.000</span>
               <span className="product-price">$7.225.000</span>
             </div>
-            <button className="btn btn-primary btn-block btn-add-cart">
+            <button 
+              className="btn btn-primary btn-block btn-add-cart"
+              onClick={(e) => handleAddToCart(e, {
+                id: 'dell-xps-15',
+                name: 'Dell XPS 15 9530',
+                price: 7225000,
+                image: '/images/product-laptop-dell.jpg',
+                specs: 'Intel Core i9, 32GB RAM, 1TB SSD'
+              })}
+            >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M6 6h15l-1.5 9h-12z" />
                 <circle cx="9" cy="20" r="1" />
@@ -89,7 +114,16 @@ export default function ShopGrid() {
             <div className="product-pricing">
               <span className="product-price">$6.290.000</span>
             </div>
-            <button className="btn btn-primary btn-block btn-add-cart">
+            <button 
+              className="btn btn-primary btn-block btn-add-cart"
+              onClick={(e) => handleAddToCart(e, {
+                id: 'lenovo-thinkpad-x1',
+                name: 'ThinkPad X1 Carbon Gen 11',
+                price: 6290000,
+                image: '/images/product-laptop-lenovo.jpg',
+                specs: 'Intel Core i7, 16GB RAM, 512GB SSD'
+              })}
+            >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M6 6h15l-1.5 9h-12z" />
                 <circle cx="9" cy="20" r="1" />

@@ -1,21 +1,95 @@
 'use client'
 
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import TopBar from '@/components/TopBar'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import { useCart } from '@/context/CartContext'
+import { useToast } from '@/hooks/use-toast'
+import { ToastAction } from '@/components/ui/toast'
 
 export default function ProductoPage() {
+  const { addToCart } = useCart()
+  const { toast } = useToast()
+  const [quantity, setQuantity] = useState(1)
+  const [selectedCPU, setSelectedCPU] = useState('i7')
+  const [selectedRAM, setSelectedRAM] = useState('16GB')
+  const [basePrice] = useState(4890000)
+  const [currentPrice, setCurrentPrice] = useState(basePrice)
+
+  useEffect(() => {
+    let price = basePrice
+    if (selectedCPU === 'i5') price -= 400000
+    if (selectedRAM === '32GB') price += 650000
+    setCurrentPrice(price)
+  }, [selectedCPU, selectedRAM, basePrice])
+
+  const formatPrice = (price: number) => {
+    return new Intl.NumberFormat('es-CO', {
+      style: 'currency',
+      currency: 'COP',
+      maximumFractionDigits: 0
+    }).format(price)
+  }
+
+  const handleQuantityChange = (val: number) => {
+    if (val < 1) return
+    setQuantity(val)
+  }
+
+  const handleAddToCart = () => {
+    const specs = `${selectedCPU === 'i7' ? 'Intel Core i7-1255U' : 'Intel Core i5-1235U'}, ${selectedRAM} DDR5`
+    
+    addToCart({
+      id: `hp-elitebook-840-${selectedCPU}-${selectedRAM}`,
+      name: 'EliteBook 840 G9 Business Laptop',
+      price: currentPrice,
+      image: '/images/product-laptop-hp.jpg',
+      specs: specs,
+      quantity: quantity
+    })
+
+    toast({
+      variant: 'success',
+      description: (
+        <div className="flex w-full">
+          <div className="w-16 bg-[#10b981] flex items-center justify-center shrink-0 border-r-2 border-black">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="3">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+          </div>
+          <div className="flex flex-col justify-center flex-1 !p-5" style={{ padding: '20px !important' }}>
+            <h4 className="font-black text-black text-base uppercase tracking-tight mb-2">¡Añadido con éxito!</h4>
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 border-2 border-black bg-gray-50 flex items-center justify-center shrink-0 p-1">
+                <img src="/images/product-laptop-hp.jpg" alt="HP Laptop" className="max-w-full max-h-full object-contain mix-blend-multiply" />
+              </div>
+              <div>
+                <p className="font-bold text-black text-xs leading-tight">{quantity}x EliteBook 840 G9</p>
+                <p className="text-[10px] text-black/60 uppercase font-bold tracking-wider mt-1">{selectedCPU} | {selectedRAM}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      ),
+      action: (
+        <ToastAction altText="Ver Carrito" className="h-auto bg-[#000] text-white hover:bg-[#ff5500] hover:text-white border-none rounded-none border-l-2 border-black font-black uppercase text-xs tracking-widest px-6 transition-colors">
+          Carrito
+        </ToastAction>
+      ),
+    })
+  }
+
   return (
     <>
       <TopBar />
       <Header />
       <main className="product-detail-page">
         <section className="product-essential container">
-          <div className="product-gallery animate-on-scroll">
+          <div className="product-gallery">
             <div className="main-image-container">
               <img src="/images/product-laptop-hp.jpg" alt="HP EliteBook 840 G9" className="main-product-image" />
-              <div className="product-badge">Destacado</div>
+              <div className="product-badge">Top Seller</div>
             </div>
             <div className="image-thumbnails">
                <div className="thumb active"><img src="/images/product-laptop-hp.jpg" alt="Vista 1" /></div>
@@ -24,106 +98,136 @@ export default function ProductoPage() {
             </div>
           </div>
 
-          <div className="product-info-panel animate-on-scroll">
+          <div className="product-info-panel">
             <nav className="breadcrumb">
               <a href="/">Inicio</a> / <a href="/tienda">Tienda</a> / <span>Portátiles</span>
             </nav>
             
-            <span className="brand-label">HP Business Class</span>
+            <span className="brand-label">HP Business Premium</span>
             <h1 className="product-title">EliteBook 840 G9 Business Laptop</h1>
             
             <div className="product-rating">
               <div className="stars">★★★★★</div>
-              <span className="review-count">(12 reseñas de clientes)</span>
+              <span className="review-count">(12 reseñas verificadas)</span>
             </div>
 
             <div className="product-price-block">
-              <span className="price-current">$4.890.000</span>
-              <span className="stock-status">En Inventario - Entrega Inmediata</span>
+              <span className="price-current">{formatPrice(currentPrice)}</span>
+              <span className="stock-status">Disponible para envío hoy</span>
             </div>
 
             <p className="product-short-desc">
-              La HP EliteBook 840 G9 redefine la productividad móvil con su diseño ultraligero y procesadores Intel Core de 12.ª generación. 
-              Ideal para profesionales que exigen rendimiento, seguridad y durabilidad en un cuerpo de aluminio premium.
+              Rendimiento corporativo sin concesiones. La EliteBook 840 G9 está diseñada para la movilidad híbrida, 
+              con una pantalla 16:10 y seguridad avanzada HP Wolf Security. Cuerpo de aluminio forjado y 
+              conectividad ultrarrápida.
             </p>
 
             <div className="product-configuration">
-               <div className="config-item">
-                 <label>Procesador</label>
-                 <select>
-                   <option>Intel Core i7-1255U</option>
-                   <option>Intel Core i5-1235U (-$400.000)</option>
-                 </select>
-               </div>
-               <div className="config-item">
-                 <label>Memoria RAM</label>
-                 <div className="option-pills">
-                   <button className="pill active">16GB DDR5</button>
-                   <button className="pill">32GB DDR5</button>
-                 </div>
-               </div>
+                <div className="config-item">
+                  <label>Procesador Intel® Core™</label>
+                  <div className="option-pills">
+                    <button 
+                      className={`pill ${selectedCPU === 'i7' ? 'active' : ''}`}
+                      onClick={() => setSelectedCPU('i7')}
+                    >
+                      Core i7-1255U
+                    </button>
+                    <button 
+                      className={`pill ${selectedCPU === 'i5' ? 'active' : ''}`}
+                      onClick={() => setSelectedCPU('i5')}
+                    >
+                      Core i5-1235U
+                    </button>
+                  </div>
+                </div>
+                <div className="config-item">
+                  <label>Memoria RAM DDR5</label>
+                  <div className="option-pills">
+                    <button 
+                      className={`pill ${selectedRAM === '16GB' ? 'active' : ''}`}
+                      onClick={() => setSelectedRAM('16GB')}
+                    >
+                      16GB (Standard)
+                    </button>
+                    <button 
+                      className={`pill ${selectedRAM === '32GB' ? 'active' : ''}`}
+                      onClick={() => setSelectedRAM('32GB')}
+                    >
+                      32GB (+ $650k)
+                    </button>
+                  </div>
+                </div>
             </div>
 
             <div className="product-purchase-actions">
               <div className="quantity-selector">
-                <button>-</button>
-                <input type="number" defaultValue="1" />
-                <button>+</button>
+                <button onClick={() => handleQuantityChange(quantity - 1)}>−</button>
+                <input 
+                  type="number" 
+                  value={quantity} 
+                  onChange={(e) => handleQuantityChange(parseInt(e.target.value) || 1)} 
+                />
+                <button onClick={() => handleQuantityChange(quantity + 1)}>+</button>
               </div>
-              <button className="btn btn-primary btn-lg btn-animated flex-1">AÑADIR AL CARRITO</button>
+              <button 
+                className="btn btn-primary btn-lg btn-animated flex-1"
+                onClick={handleAddToCart}
+              >
+                AÑADIR AL CARRITO
+              </button>
             </div>
 
             <div className="product-secondary-actions">
                <button className="btn-link">
-                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-                 Lista de deseos
+                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                 Guardar
                </button>
                <button className="btn-link">
-                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 20v-6M9 17l3-3 3 3M12 4v6M9 7l3 3 3-3"/></svg>
+                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 20v-6M9 17l3-3 3 3M12 4v6M9 7l3 3 3-3"/></svg>
                  Comparar
                </button>
             </div>
 
             <div className="product-meta-info">
-              <span><strong>SKU:</strong> HP-EB840-G9-01</span>
+              <span><strong>SKU:</strong> HP-EB840-G9-{selectedCPU.toUpperCase()}</span>
               <span><strong>Categoría:</strong> Portátiles Corporativos</span>
-              <span><strong>Etiquetas:</strong> HP, EliteBook, Core i7, DDR5</span>
+              <span><strong>Etiquetas:</strong> HP, EliteBook, Enterprise, Business</span>
             </div>
           </div>
         </section>
 
         <section className="product-detailed-info container">
           <div className="info-tabs">
-            <button className="tab-btn active">Especificaciones Técnicas</button>
-            <button className="tab-btn">Descripción Detallada</button>
-            <button className="tab-btn">Garantía y Soporte</button>
+            <button className="tab-btn active">Especificaciones</button>
+            <button className="tab-btn">Descripción</button>
+            <button className="tab-btn">Reviews</button>
           </div>
-          <div className="tab-content animate-on-scroll">
+          <div className="tab-content">
             <table className="specs-table">
               <tbody>
                 <tr>
                   <td>Procesador</td>
-                  <td>Intel® Core™ i7-1255U (hasta 4,7 GHz, 12 MB de caché L3, 10 núcleos)</td>
+                  <td>{selectedCPU === 'i7' ? 'Intel® Core™ i7-1255U (10 núcleos, 12MB Caché)' : 'Intel® Core™ i5-1235U (10 núcleos, 12MB Caché)'}</td>
                 </tr>
                 <tr>
                   <td>Memoria</td>
-                  <td>16 GB de RAM DDR5-4800 MHz (1 x 16 GB)</td>
+                  <td>{selectedRAM} RAM DDR5-4800 MHz</td>
                 </tr>
                 <tr>
                   <td>Almacenamiento</td>
-                  <td>SSD PCIe® NVMe™ de 512 GB</td>
+                  <td>SSD PCIe® NVMe™ de 512 GB M.2 Gen4</td>
                 </tr>
                 <tr>
                   <td>Pantalla</td>
-                  <td>14" diagonal, WUXGA (1920 x 1200), IPS, anti-glare, 400 nits</td>
+                  <td>14" WUXGA (1920 x 1200), IPS, 400 nits, Low Blue Light</td>
                 </tr>
                 <tr>
-                  <td>Gráficos</td>
-                  <td>Intel® Iris® Xᵉ Graphics</td>
+                  <td>Seguridad</td>
+                  <td>HP Wolf Pro Security Edition (1 año incluido)</td>
                 </tr>
                 <tr>
-                  <td>Sistema Operativo</td>
-                  <td>Windows 11 Pro</td>
+                  <td>Puertos</td>
+                  <td>2 Thunderbolt™ 4, 2 USB Type-A, 1 HDMI 2.0</td>
                 </tr>
               </tbody>
             </table>
@@ -131,14 +235,13 @@ export default function ProductoPage() {
         </section>
 
         <section className="related-products container">
-           <h2 className="section-title">Productos Relacionados</h2>
+           <h2 className="section-title">Te puede interesar</h2>
            <div className="products-grid">
-              {/* Product cards will reuse store styling */}
               <article className="product-card">
                 <div className="product-image"><img src="/images/product-laptop-dell.jpg" alt="Dell XPS" /></div>
                 <div className="product-info">
                   <span className="product-brand">DELL</span>
-                  <h3 className="product-name">XPS 15 9530</h3>
+                  <h3 className="product-name">XPS 15 9530 Premium</h3>
                   <div className="product-pricing"><span className="product-price">$7.225.000</span></div>
                 </div>
               </article>
@@ -146,7 +249,7 @@ export default function ProductoPage() {
                 <div className="product-image"><img src="/images/product-laptop-lenovo.jpg" alt="Lenovo X1" /></div>
                 <div className="product-info">
                   <span className="product-brand">LENOVO</span>
-                  <h3 className="product-name">ThinkPad X1 Carbon</h3>
+                  <h3 className="product-name">ThinkPad X1 Carbon Gen 10</h3>
                   <div className="product-pricing"><span className="product-price">$6.290.000</span></div>
                 </div>
               </article>
@@ -154,156 +257,6 @@ export default function ProductoPage() {
         </section>
       </main>
       <Footer />
-      
-      <style jsx>{`
-        .product-detail-page {
-          padding-top: 120px;
-          padding-bottom: 80px;
-          background: #fdfdfd;
-        }
-        .product-essential {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 60px;
-          margin-bottom: 80px;
-        }
-        @media (min-width: 1024px) {
-          .product-essential {
-            grid-template-columns: 1.2fr 1fr;
-          }
-        }
-        .main-image-container {
-          position: relative;
-          aspect-ratio: 1;
-          background: #f8f8f8;
-          border: 1px solid #eee;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          margin-bottom: 20px;
-        }
-        .main-product-image {
-          max-width: 90%;
-          max-height: 90%;
-          object-fit: contain;
-          mix-blend-mode: multiply;
-        }
-        .image-thumbnails {
-          display: flex;
-          gap: 15px;
-        }
-        .thumb {
-          width: 80px;
-          height: 80px;
-          border: 1px solid #eee;
-          cursor: pointer;
-          padding: 10px;
-          background: #f8f8f8;
-        }
-        .thumb.active { border-color: var(--color-primary); }
-        .thumb img { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply; }
-        
-        .breadcrumb { font-size: 13px; color: #888; margin-bottom: 20px; }
-        .breadcrumb a { color: #888; text-decoration: none; }
-        .brand-label { font-size: 12px; font-weight: 700; color: var(--color-primary); text-transform: uppercase; letter-spacing: 2px; }
-        .product-title { font-size: 32px; font-weight: 900; margin: 10px 0; color: #0a0a0a; line-height: 1.1; }
-        .product-price-block { margin: 25px 0; }
-        .price-current { font-size: 36px; font-weight: 800; color: var(--color-primary); display: block; }
-        .stock-status { font-size: 12px; color: #22c55e; font-weight: 600; }
-        
-        .product-short-desc { color: #555; line-height: 1.6; margin-bottom: 30px; }
-        
-        .config-item { margin-bottom: 20px; }
-        .config-item label { display: block; font-size: 12px; font-weight: 700; text-transform: uppercase; margin-bottom: 10px; }
-        .option-pills { display: flex; gap: 10px; }
-        .pill { padding: 8px 15px; border: 1px solid #ddd; background: none; font-size: 13px; cursor: pointer; }
-        .pill.active { background: #0a0a0a; color: #fff; border-color: #0a0a0a; }
-        
-        .product-purchase-actions { 
-          display: flex; 
-          gap: 15px; 
-          margin-top: 35px;
-          height: 56px;
-        }
-        .quantity-selector { 
-          display: flex; 
-          background: #f5f5f5;
-          border-radius: 4px;
-          overflow: hidden;
-          padding: 4px;
-          border: 1px solid #eee;
-        }
-        .quantity-selector button { 
-          width: 48px; 
-          height: 100%;
-          border: none; 
-          background: transparent; 
-          font-size: 18px;
-          cursor: pointer; 
-          color: #0a0a0a;
-          transition: background 0.2s;
-        }
-        .quantity-selector button:hover {
-          background: #e5e5e5;
-        }
-        .quantity-selector input { 
-          width: 44px; 
-          border: none; 
-          background: transparent;
-          text-align: center; 
-          font-weight: 800; 
-          font-size: 16px;
-          color: #0a0a0a;
-          -moz-appearance: textfield;
-        }
-        .quantity-selector input::-webkit-outer-spin-button,
-        .quantity-selector input::-webkit-inner-spin-button {
-          -webkit-appearance: none;
-          margin: 0;
-        }
-        .flex-1 { flex: 1; }
-
-        .product-secondary-actions {
-          display: flex;
-          gap: 24px;
-          margin-top: 25px;
-        }
-        .btn-link {
-          background: none;
-          border: none;
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          font-size: 14px;
-          font-weight: 600;
-          color: #555;
-          cursor: pointer;
-          padding: 0;
-          transition: color 0.2s;
-        }
-        .btn-link:hover {
-          color: #0a0a0a;
-        }
-        .btn-link svg {
-          stroke: currentColor;
-          transition: transform 0.2s;
-        }
-        .btn-link:hover svg {
-          transform: scale(1.1);
-        }
-        
-        .product-meta-info { margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; display: flex; flex-direction: column; gap: 8px; font-size: 13px; color: #666; }
-        
-        .tab-btn { padding: 15px 30px; border: none; background: none; font-weight: 700; font-size: 14px; text-transform: uppercase; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.3s; }
-        .tab-btn.active { border-bottom-color: var(--color-primary); color: var(--color-primary); }
-        .tab-btn:hover:not(.active) { color: #0a0a0a; border-bottom-color: #eee; }
-        
-        .specs-table { width: 100%; border-collapse: collapse; margin-top: 30px; }
-        .specs-table td { padding: 15px; border-bottom: 1px solid #eee; font-size: 14px; }
-        .specs-table td:first-child { font-weight: 700; width: 30%; color: #888; }
-        
-        .related-products { padding-top: 100px; }
-      `}</style>
     </>
   )
 }

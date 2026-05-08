@@ -30,7 +30,7 @@ export default function FloatingSidebar() {
   return (
     <>
       {/* Floating Right Sidebar */}
-      <aside className="floating-sidebar" aria-label="Acciones rápidas">
+      <aside className="floating-sidebar animate-on-scroll reveal-right" aria-label="Acciones rápidas">
         {/* WhatsApp */}
         <a
           href="https://wa.me/573144874534"

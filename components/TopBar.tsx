@@ -4,7 +4,7 @@ import React from 'react'
 
 export default function TopBar() {
   return (
-    <div className="top-bar">
+    <div className="top-bar animate-on-scroll reveal-shutter">
       <div className="container top-bar-content">
         <p className="top-bar-promo">Envío gratis a partir de compras superiores a $500.000 COP.</p>
         <div className="top-bar-contact">

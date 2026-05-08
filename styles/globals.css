@@ -118,13 +118,14 @@
 @layer utilities {
   .animate-on-scroll {
     opacity: 0;
-    transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: all 1.5s cubic-bezier(0.22, 1, 0.36, 1);
     will-change: transform, opacity, filter, clip-path;
   }
 
   /* Reveal Perspective - 3D rotation */
   .reveal-perspective {
-    transform: perspective(1000px) rotateX(-20deg) translateY(60px);
+    transform: perspective(1000px) rotateX(-30deg) translateY(80px);
+    transition: opacity 1.8s ease, transform 1.8s cubic-bezier(0.23, 1, 0.32, 1);
   }
   .reveal-perspective.visible {
     transform: perspective(1000px) rotateX(0deg) translateY(0);
@@ -133,8 +134,9 @@
 
   /* Reveal Blur - Soft focus to sharp */
   .reveal-blur {
-    filter: blur(20px);
-    transform: scale(0.95);
+    filter: blur(30px);
+    transform: scale(0.8);
+    transition: opacity 2.2s ease, filter 2.2s ease, transform 2.2s cubic-bezier(0.23, 1, 0.32, 1);
   }
   .reveal-blur.visible {
     filter: blur(0);
@@ -145,7 +147,8 @@
   /* Reveal Shutter - Vertical clip reveal */
   .reveal-shutter {
     clip-path: inset(0 0 100% 0);
-    transform: translateY(30px);
+    transform: translateY(60px);
+    transition: clip-path 2s cubic-bezier(0.77, 0, 0.175, 1), opacity 1.5s ease, transform 2s ease;
   }
   .reveal-shutter.visible {
     clip-path: inset(0 0 0 0);
@@ -155,7 +158,8 @@
 
   /* Reveal Skew - Dynamic slide with skew */
   .reveal-skew {
-    transform: translateX(-40px) skewX(5deg);
+    transform: translateX(-60px) skewX(10deg);
+    transition: opacity 1.8s ease, transform 1.8s cubic-bezier(0.23, 1, 0.32, 1);
   }
   .reveal-skew.visible {
     transform: translateX(0) skewX(0);
@@ -220,8 +224,8 @@
   }
   [data-reveal] {
     opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s cubic-bezier(0.23, 1, 0.32, 1), transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    transform: translateY(60px);
+    transition: opacity 1.8s cubic-bezier(0.23, 1, 0.32, 1), transform 1.8s cubic-bezier(0.23, 1, 0.32, 1);
   }
   [data-reveal].visible {
     opacity: 1;
@@ -260,7 +264,7 @@
   .reveal-geometric {
     clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%);
     opacity: 0;
-    transition: clip-path 1.2s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.6s ease;
+    transition: clip-path 2.2s cubic-bezier(0.77, 0, 0.175, 1), opacity 1.2s ease;
   }
   .reveal-geometric.visible {
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
@@ -283,8 +287,8 @@
   /* Side Entries */
   .reveal-left {
     opacity: 0;
-    transform: translateX(-50px);
-    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    transform: translateX(-100px);
+    transition: opacity 1.8s ease, transform 1.8s cubic-bezier(0.23, 1, 0.32, 1);
   }
   .reveal-left.visible {
     opacity: 1;
@@ -293,8 +297,8 @@
 
   .reveal-right {
     opacity: 0;
-    transform: translateX(50px);
-    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    transform: translateX(100px);
+    transition: opacity 1.8s ease, transform 1.8s cubic-bezier(0.23, 1, 0.32, 1);
   }
   .reveal-right.visible {
     opacity: 1;
@@ -304,8 +308,8 @@
   /* Zoom & Rotate Entry */
   .reveal-zoom {
     opacity: 0;
-    transform: scale(0.8) rotate(-5deg);
-    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform: scale(0.7) rotate(-8deg);
+    transition: opacity 2s ease, transform 2s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
   .reveal-zoom.visible {
     opacity: 1;

@@ -15,7 +15,7 @@ export default function PaymentsBanner() {
             <h2>Pasarela de Pagos Integrada</h2>
             <p>Procesamos tus pagos de forma segura y eficiente. Aceptamos múltiples métodos para tu comodidad, garantizando la protección de tus datos en cada transacción.</p>
           </div>
-          <div className="payments-grid">
+          <div className="payments-grid stagger-children">
             <div className="payment-method-item">
               <div className="payment-icon">
                 <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" strokeWidth="1.5">

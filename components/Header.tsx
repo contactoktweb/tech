@@ -33,7 +33,7 @@ export default function Header() {
   return (
     <>
       <header className={`header ${isScrolled ? 'scrolled' : ''}`}>
-        <nav className="navbar container">
+        <nav className="navbar container animate-on-scroll reveal-perspective">
           <Link href="/" className="logo">
             <Image
               src="/logo-largo.png"

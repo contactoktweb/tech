@@ -9,7 +9,7 @@ export default function PaymentsBanner() {
   return (
     <section className="payments-banner">
       <div className="container">
-        <div className="payments-content animate-on-scroll">
+        <div className="payments-content animate-on-scroll reveal-blur">
           <div className="payments-text">
             <span className="badge">Checkout Seguro</span>
             <h2>Pasarela de Pagos Integrada</h2>

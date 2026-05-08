@@ -546,16 +546,20 @@
     margin-bottom: 80px;
 }
 
+.product-gallery {
+    position: relative;
+    height: auto;
+}
+
 @media (min-width: 1024px) {
     .product-essential {
         grid-template-columns: 1.2fr 1fr;
     }
-}
-
-.product-gallery {
-    position: sticky;
-    top: 120px;
-    height: fit-content;
+    .product-gallery {
+        position: sticky;
+        top: 120px;
+        height: fit-content;
+    }
 }
 
 .main-image-container {

@@ -38,10 +38,10 @@ export default function Header() {
             <Image
               src="/logo-largo.png"
               alt="FANGAN TECH - Tecnología que Transforma"
-              width={180}
-              height={50}
+              width={280}
+              height={75}
               priority
-              style={{ height: 'auto', maxHeight: '45px', width: 'auto' }}
+              style={{ height: 'auto', maxHeight: '80px', width: 'auto' }}
             />
           </Link>
           

@@ -517,7 +517,6 @@ button {
     min-height: 80vh;
     overflow: hidden;
     background-color: var(--color-white);
-    padding-top: 60px;
 }
 
 .hero.elegant-hero .hero-bg {

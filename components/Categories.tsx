@@ -5,7 +5,7 @@ export default function Categories() {
         <h2 className="section-title animate-on-scroll">Nuestro Portafolio</h2>
         <p className="section-subtitle animate-on-scroll">Descubre nuestra amplia gama de productos tecnológicos</p>
         <div className="categories-grid">
-          <article className="category-card animate-on-scroll">
+          <article className="category-card animate-on-scroll reveal-left">
             <div className="category-image">
               <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect x="20" y="30" width="80" height="50" stroke="currentColor" strokeWidth="2"/>
@@ -18,11 +18,11 @@ export default function Categories() {
             <h3>Computadores y Portátiles</h3>
             <p>Equipos de alto rendimiento para trabajo y productividad</p>
             <div className="category-actions">
-              <a href="#" className="btn btn-outline btn-sm btn-animated">Ver detalles</a>
-              <a href="#" className="btn btn-primary btn-sm btn-animated">Comprar</a>
+              <a href="#" className="btn btn-outline btn-sm btn-animated btn-magnetic">Ver detalles</a>
+              <a href="#" className="btn btn-primary btn-sm btn-animated btn-magnetic">Comprar</a>
             </div>
           </article>
-          <article className="category-card animate-on-scroll">
+          <article className="category-card animate-on-scroll reveal-right">
             <div className="category-image">
               <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect x="25" y="25" width="70" height="70" stroke="currentColor" strokeWidth="2"/>
@@ -35,11 +35,11 @@ export default function Categories() {
             <h3>Componentes y Accesorios</h3>
             <p>Memorias, discos, periféricos y más para tu equipo</p>
             <div className="category-actions">
-              <a href="#" className="btn btn-outline btn-sm btn-animated">Ver detalles</a>
-              <a href="#" className="btn btn-primary btn-sm btn-animated">Comprar</a>
+              <a href="#" className="btn btn-outline btn-sm btn-animated btn-magnetic">Ver detalles</a>
+              <a href="#" className="btn btn-primary btn-sm btn-animated btn-magnetic">Comprar</a>
             </div>
           </article>
-          <article className="category-card animate-on-scroll">
+          <article className="category-card animate-on-scroll reveal-left">
             <div className="category-image">
               <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect x="30" y="20" width="60" height="80" stroke="currentColor" strokeWidth="2"/>
@@ -51,11 +51,11 @@ export default function Categories() {
             <h3>Licencias de Software</h3>
             <p>Microsoft CSP y ESD para empresas y usuarios</p>
             <div className="category-actions">
-              <a href="#" className="btn btn-outline btn-sm btn-animated">Ver detalles</a>
-              <a href="#" className="btn btn-primary btn-sm btn-animated">Comprar</a>
+              <a href="#" className="btn btn-outline btn-sm btn-animated btn-magnetic">Ver detalles</a>
+              <a href="#" className="btn btn-primary btn-sm btn-animated btn-magnetic">Comprar</a>
             </div>
           </article>
-          <article className="category-card animate-on-scroll">
+          <article className="category-card animate-on-scroll reveal-right">
             <div className="category-image">
               <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect x="35" y="15" width="50" height="90" stroke="currentColor" strokeWidth="2"/>
@@ -66,11 +66,11 @@ export default function Categories() {
             <h3>Dispositivos Móviles e iPads</h3>
             <p>Smartphones y tablets de última generación</p>
             <div className="category-actions">
-              <a href="#" className="btn btn-outline btn-sm btn-animated">Ver detalles</a>
-              <a href="#" className="btn btn-primary btn-sm btn-animated">Comprar</a>
+              <a href="#" className="btn btn-outline btn-sm btn-animated btn-magnetic">Ver detalles</a>
+              <a href="#" className="btn btn-primary btn-sm btn-animated btn-magnetic">Comprar</a>
             </div>
           </article>
-          <article className="category-card animate-on-scroll">
+          <article className="category-card animate-on-scroll reveal-left">
             <div className="category-image">
               <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect x="15" y="25" width="90" height="55" stroke="currentColor" strokeWidth="2"/>
@@ -82,11 +82,11 @@ export default function Categories() {
             <h3>Televisores y Consolas</h3>
             <p>Entretenimiento y gaming para el hogar</p>
             <div className="category-actions">
-              <a href="#" className="btn btn-outline btn-sm btn-animated">Ver detalles</a>
-              <a href="#" className="btn btn-primary btn-sm btn-animated">Comprar</a>
+              <a href="#" className="btn btn-outline btn-sm btn-animated btn-magnetic">Ver detalles</a>
+              <a href="#" className="btn btn-primary btn-sm btn-animated btn-magnetic">Comprar</a>
             </div>
           </article>
-          <article className="category-card animate-on-scroll">
+          <article className="category-card animate-on-scroll reveal-right">
             <div className="category-image">
               <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect x="25" y="25" width="70" height="70" stroke="currentColor" strokeWidth="2"/>
@@ -97,8 +97,8 @@ export default function Categories() {
             <h3>Redes y Conectividad</h3>
             <p>Routers, switches y soluciones de red</p>
             <div className="category-actions">
-              <a href="#" className="btn btn-outline btn-sm btn-animated">Ver detalles</a>
-              <a href="#" className="btn btn-primary btn-sm btn-animated">Comprar</a>
+              <a href="#" className="btn btn-outline btn-sm btn-animated btn-magnetic">Ver detalles</a>
+              <a href="#" className="btn btn-primary btn-sm btn-animated btn-magnetic">Comprar</a>
             </div>
           </article>
         </div>

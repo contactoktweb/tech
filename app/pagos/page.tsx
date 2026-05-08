@@ -7,6 +7,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import FloatingSidebar from '@/components/FloatingSidebar'
 import { useCart } from '@/context/CartContext'
+import { colombianDepartments, citiesByDepartment } from '@/lib/locations'
 
 type Step = 'cart' | 'info' | 'payment' | 'thanks'
 
@@ -14,6 +15,8 @@ export default function PagosPage() {
   const { cart, cartTotal, cartCount, updateQuantity, removeFromCart, clearCart } = useCart()
   const [step, setStep] = useState<Step>('cart')
   const [paymentMethod, setPaymentMethod] = useState<string>('card')
+  const [selectedDept, setSelectedDept] = useState<string>('')
+  const [selectedCity, setSelectedCity] = useState<string>('')
 
   const formatCurrency = (val: number) => {
     return new Intl.NumberFormat('es-CO', {
@@ -224,12 +227,36 @@ export default function PagosPage() {
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="flex flex-col gap-2">
-                        <label className="block font-black text-xs uppercase tracking-widest text-black">Ciudad</label>
-                        <input type="text" required style={{ width: '100%', backgroundColor: '#f9fafb', border: '3px solid #000', padding: '16px', boxSizing: 'border-box', minHeight: '56px', fontSize: '16px', fontWeight: 500, outline: 'none', margin: 0, appearance: 'none', borderRadius: 0 }} placeholder="Medellín" />
+                        <label className="block font-black text-xs uppercase tracking-widest text-black">Departamento</label>
+                        <select 
+                          required 
+                          value={selectedDept}
+                          onChange={(e) => {
+                            setSelectedDept(e.target.value);
+                            setSelectedCity('');
+                          }}
+                          style={{ width: '100%', backgroundColor: '#f9fafb', border: '3px solid #000', padding: '16px', boxSizing: 'border-box', minHeight: '56px', fontSize: '16px', fontWeight: 500, outline: 'none', margin: 0, appearance: 'none', borderRadius: 0, backgroundImage: 'url("data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right 16px center', backgroundSize: '16px' }}
+                        >
+                          <option value="">Seleccionar Departamento</option>
+                          {colombianDepartments.map(dept => (
+                            <option key={dept} value={dept}>{dept}</option>
+                          ))}
+                        </select>
                       </div>
                       <div className="flex flex-col gap-2">
-                        <label className="block font-black text-xs uppercase tracking-widest text-black">Departamento</label>
-                        <input type="text" required style={{ width: '100%', backgroundColor: '#f9fafb', border: '3px solid #000', padding: '16px', boxSizing: 'border-box', minHeight: '56px', fontSize: '16px', fontWeight: 500, outline: 'none', margin: 0, appearance: 'none', borderRadius: 0 }} placeholder="Antioquia" />
+                        <label className="block font-black text-xs uppercase tracking-widest text-black">Ciudad</label>
+                        <select 
+                          required 
+                          value={selectedCity}
+                          onChange={(e) => setSelectedCity(e.target.value)}
+                          disabled={!selectedDept}
+                          style={{ width: '100%', backgroundColor: '#f9fafb', border: '3px solid #000', padding: '16px', boxSizing: 'border-box', minHeight: '56px', fontSize: '16px', fontWeight: 500, outline: 'none', margin: 0, appearance: 'none', borderRadius: 0, opacity: !selectedDept ? 0.6 : 1, backgroundImage: 'url("data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right 16px center', backgroundSize: '16px' }}
+                        >
+                          <option value="">{selectedDept ? 'Seleccionar Ciudad' : 'Primero elige departamento'}</option>
+                          {selectedDept && citiesByDepartment[selectedDept]?.map(city => (
+                            <option key={city} value={city}>{city}</option>
+                          ))}
+                        </select>
                       </div>
                     </div>
                     

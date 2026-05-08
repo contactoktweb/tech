@@ -55,7 +55,7 @@ const servicesData: ServiceCategory[] = [
     category: 'Servicios Técnicos',
     services: [
       {
-        title: 'Soporte Técnico In Situ',
+        title: 'Soporte Técnico en sitio',
         description: 'Nuestros técnicos certificados se desplazan directamente a tu empresa para resolver incidencias, realizar mantenimientos preventivos y correctivos en tus equipos de cómputo, redes y periféricos.'
       },
       {
@@ -108,7 +108,7 @@ export default function ServicesSection() {
 
         <div className="services-categories">
           {servicesData.map((category, catIdx) => (
-            <div key={catIdx} className="service-category animate-on-scroll">
+            <div key={catIdx} className="service-category animate-on-scroll reveal-zoom">
               <h3 className="service-category-title">{category.category}</h3>
               <div className="service-accordion">
                 {category.services.map((service, svcIdx) => {

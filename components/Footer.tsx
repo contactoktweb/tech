@@ -100,9 +100,9 @@ export default function Footer() {
             <Image
               src="/logo-largo.png"
               alt="FANGAN TECH - Tecnología que Transforma"
-              width={160}
-              height={45}
-              style={{ height: 'auto', maxHeight: '40px', width: 'auto', filter: 'brightness(0) invert(1)' }}
+              width={220}
+              height={55}
+              style={{ height: 'auto', maxHeight: '55px', width: 'auto', filter: 'brightness(0) invert(1)' }}
             />
           </div>
           

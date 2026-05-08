@@ -1,8 +1,10 @@
+import Link from 'next/link'
+
 export default function SoftwareBanner() {
   return (
     <section className="software-banner">
       <div className="container software-content">
-        <div className="software-text animate-on-scroll">
+        <div className="software-text animate-on-scroll reveal-skew">
           <span className="badge">Microsoft Partner</span>
           <h2>Soluciones Corporativas de Software</h2>
           <p>Licencias Microsoft CSP y ESD con activación inmediata, soporte técnico y precios competitivos para empresas de todos los tamaños.</p>
@@ -26,9 +28,9 @@ export default function SoftwareBanner() {
               <span>Microsoft ESD</span>
             </div>
           </div>
-          <a href="#" className="btn btn-dark btn-lg btn-animated">Ver licencias disponibles</a>
+          <Link href="/tienda" className="btn btn-primary btn-animated btn-magnetic pulse-glow">Ver licencias disponibles</Link>
         </div>
-        <div className="software-graphic animate-on-scroll">
+        <div className="software-graphic animate-on-scroll reveal-perspective">
           <div className="device-stack">
             <div className="device device-laptop">
               <div className="device-screen"></div>

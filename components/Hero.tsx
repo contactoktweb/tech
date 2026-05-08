@@ -2,28 +2,33 @@ import Link from 'next/link'
 
 export default function Hero() {
   return (
-    <section className="hero elegant-hero">
+    <section className="hero elegant-hero spotlight-container">
       <div className="hero-bg"></div>
+      <div className="floating-dot" style={{ left: '10%', top: '20%', animationDelay: '0s' }}></div>
+      <div className="floating-dot" style={{ left: '30%', top: '50%', animationDelay: '2s' }}></div>
+      <div className="floating-dot" style={{ left: '70%', top: '10%', animationDelay: '4s' }}></div>
+      <div className="floating-dot" style={{ left: '90%', top: '80%', animationDelay: '1s' }}></div>
+      <div className="spotlight"></div>
       <div className="hero-grid container">
         <div className="hero-content">
           <div className="hero-text-wrapper">
-            <div className="elegant-badge"><span>Soluciones Especializadas</span></div>
-            <h1 className="hero-title">
-              <span className="title-line" data-reveal>EL FUTURO</span>
-              <span className="title-line" data-reveal>DE TU EMPRESA</span>
-              <span className="title-line title-accent" data-reveal>ES AHORA</span>
+            <div className="elegant-badge animate-on-scroll reveal-perspective"><span>Soluciones Especializadas</span></div>
+            <h1 className="hero-title magnetic-text">
+              <span className="title-line glitch-hover" data-reveal>EL FUTURO</span>
+              <span className="title-line glitch-hover" data-reveal>DE TU EMPRESA</span>
+              <span className="title-line title-accent glitch-hover" data-reveal>ES AHORA</span>
             </h1>
             <p className="hero-subtitle" data-reveal>
               Hardware de vanguardia y software corporativo para maximizar la productividad de tu organización.
             </p>
             <div className="hero-cta" data-reveal>
-              <Link href="/tienda" className="btn btn-primary btn-lg btn-animated">Explorar Catálogo</Link>
-              <a href="#contacto" className="btn btn-outline btn-lg btn-animated">Contactar Ventas</a>
+              <Link href="/tienda" className="btn btn-primary btn-lg btn-animated btn-magnetic pulse-glow">Explorar Catálogo</Link>
+              <a href="#contacto" className="btn btn-outline btn-lg btn-animated btn-magnetic">Contactar Ventas</a>
             </div>
           </div>
         </div>
-        <div className="hero-visual">
-          <div className="elegant-tech-graphic">
+        <div className="hero-visual animate-on-scroll reveal-perspective">
+          <div className="elegant-tech-graphic" data-parallax data-speed="0.08">
             <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" className="fine-circuit">
               <path d="M50 200 L150 100 L250 100 L350 200" stroke="currentColor" strokeWidth="1" className="circuit-path-1" />
               <path d="M100 50 L100 150 L300 150 L300 250" stroke="currentColor" strokeWidth="1" strokeDasharray="4 4" className="circuit-path-2" />

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, Suspense } from 'react'
 import Link from 'next/link'
 import TopBar from '@/components/TopBar'
 import Header from '@/components/Header'
@@ -8,15 +8,33 @@ import Footer from '@/components/Footer'
 import FloatingSidebar from '@/components/FloatingSidebar'
 import { useCart } from '@/context/CartContext'
 import { colombianDepartments, citiesByDepartment } from '@/lib/locations'
+import Script from 'next/script'
+import { useSearchParams } from 'next/navigation'
 
 type Step = 'cart' | 'info' | 'payment' | 'thanks'
 
-export default function PagosPage() {
+export const dynamic = 'force-dynamic'
+
+function PagosContent() {
   const { cart, cartTotal, cartCount, updateQuantity, removeFromCart, clearCart } = useCart()
-  const [step, setStep] = useState<Step>('cart')
+  const searchParams = useSearchParams()
+  const [step, setStep] = useState<Step>(searchParams.get('status') === 'success' ? 'thanks' : 'cart')
   const [paymentMethod, setPaymentMethod] = useState<string>('card')
   const [selectedDept, setSelectedDept] = useState<string>('')
   const [selectedCity, setSelectedCity] = useState<string>('')
+  const [billingInfo, setBillingInfo] = useState({
+    name: '',
+    doc: '',
+    email: '',
+    phone: '',
+    address: ''
+  })
+
+  React.useEffect(() => {
+    if (step === 'thanks') {
+      clearCart()
+    }
+  }, [step, clearCart])
 
   const formatCurrency = (val: number) => {
     return new Intl.NumberFormat('es-CO', {
@@ -29,9 +47,51 @@ export default function PagosPage() {
   const handleNextStep = (nextStep: Step) => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
     if (nextStep === 'thanks') {
-      // Process order
+      // Logic handled by ePayco response redirect
     }
     setStep(nextStep)
+  }
+
+  const handleEpaycoPayment = () => {
+    // @ts-ignore
+    const epaycoInstance = window.ePayco;
+
+    if (!epaycoInstance) {
+      alert('La pasarela de pago se está terminando de cargar. Por favor, intenta de nuevo en un segundo.')
+      return
+    }
+
+    const handler = epaycoInstance.checkout.configure({
+      key: process.env.NEXT_PUBLIC_EPAYCO_PUBLIC_KEY,
+      test: process.env.NEXT_PUBLIC_EPAYCO_TEST === 'true'
+    })
+
+    const data = {
+      name: "Compra Tech Shop",
+      description: cart.map(item => `${item.quantity}x ${item.name}`).join(', '),
+      invoice: `ORD-${Date.now()}`,
+      currency: "cop",
+      amount: cartTotal.toString(),
+      tax_base: "0",
+      tax: "0",
+      country: "co",
+      lang: "es",
+      external: "false",
+      onpage: "true",
+      test: process.env.NEXT_PUBLIC_EPAYCO_TEST === 'true',
+      // Customer info
+      name_billing: billingInfo.name,
+      address_billing: `${billingInfo.address}, ${selectedCity}, ${selectedDept}`,
+      type_doc_billing: "cc",
+      mobile_phone_billing: billingInfo.phone,
+      number_doc_billing: billingInfo.doc,
+      email_billing: billingInfo.email,
+      // Response URLs
+      confirmation: `${window.location.origin}/api/pagos/confirmacion`,
+      response: `${window.location.origin}/pagos/resultado`,
+    }
+
+    handler.open(data)
   }
 
   if (cart.length === 0 && step !== 'thanks') {
@@ -63,6 +123,10 @@ export default function PagosPage() {
 
   return (
     <>
+      <Script 
+        src="https://checkout.epayco.co/checkout.js" 
+        strategy="afterInteractive"
+      />
       <TopBar />
       <Header />
       <FloatingSidebar />
@@ -206,24 +270,59 @@ export default function PagosPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="flex flex-col gap-2">
                         <label className="block font-black text-xs uppercase tracking-widest text-black">Nombre Completo</label>
-                        <input type="text" required style={{ width: '100%', backgroundColor: '#f9fafb', border: '3px solid #000', padding: '16px', boxSizing: 'border-box', minHeight: '56px', fontSize: '16px', fontWeight: 500, outline: 'none', margin: 0, appearance: 'none', borderRadius: 0 }} placeholder="Juan Pérez" />
+                        <input 
+                          type="text" 
+                          required 
+                          value={billingInfo.name}
+                          onChange={(e) => setBillingInfo({...billingInfo, name: e.target.value})}
+                          style={{ width: '100%', backgroundColor: '#f9fafb', border: '3px solid #000', padding: '16px', boxSizing: 'border-box', minHeight: '56px', fontSize: '16px', fontWeight: 500, outline: 'none', margin: 0, appearance: 'none', borderRadius: 0 }} 
+                          placeholder="Juan Pérez" 
+                        />
                       </div>
                       <div className="flex flex-col gap-2">
                         <label className="block font-black text-xs uppercase tracking-widest text-black">Documento (CC/NIT)</label>
-                        <input type="text" required style={{ width: '100%', backgroundColor: '#f9fafb', border: '3px solid #000', padding: '16px', boxSizing: 'border-box', minHeight: '56px', fontSize: '16px', fontWeight: 500, outline: 'none', margin: 0, appearance: 'none', borderRadius: 0 }} placeholder="1234567890" />
+                        <input 
+                          type="text" 
+                          required 
+                          value={billingInfo.doc}
+                          onChange={(e) => setBillingInfo({...billingInfo, doc: e.target.value})}
+                          style={{ width: '100%', backgroundColor: '#f9fafb', border: '3px solid #000', padding: '16px', boxSizing: 'border-box', minHeight: '56px', fontSize: '16px', fontWeight: 500, outline: 'none', margin: 0, appearance: 'none', borderRadius: 0 }} 
+                          placeholder="1234567890" 
+                        />
                       </div>
                       <div className="flex flex-col gap-2">
                         <label className="block font-black text-xs uppercase tracking-widest text-black">Correo Electrónico</label>
-                        <input type="email" required style={{ width: '100%', backgroundColor: '#f9fafb', border: '3px solid #000', padding: '16px', boxSizing: 'border-box', minHeight: '56px', fontSize: '16px', fontWeight: 500, outline: 'none', margin: 0, appearance: 'none', borderRadius: 0 }} placeholder="correo@ejemplo.com" />
+                        <input 
+                          type="email" 
+                          required 
+                          value={billingInfo.email}
+                          onChange={(e) => setBillingInfo({...billingInfo, email: e.target.value})}
+                          style={{ width: '100%', backgroundColor: '#f9fafb', border: '3px solid #000', padding: '16px', boxSizing: 'border-box', minHeight: '56px', fontSize: '16px', fontWeight: 500, outline: 'none', margin: 0, appearance: 'none', borderRadius: 0 }} 
+                          placeholder="correo@ejemplo.com" 
+                        />
                       </div>
                       <div className="flex flex-col gap-2">
                         <label className="block font-black text-xs uppercase tracking-widest text-black">Teléfono Celular</label>
-                        <input type="tel" required style={{ width: '100%', backgroundColor: '#f9fafb', border: '3px solid #000', padding: '16px', boxSizing: 'border-box', minHeight: '56px', fontSize: '16px', fontWeight: 500, outline: 'none', margin: 0, appearance: 'none', borderRadius: 0 }} placeholder="300 1234567" />
+                        <input 
+                          type="tel" 
+                          required 
+                          value={billingInfo.phone}
+                          onChange={(e) => setBillingInfo({...billingInfo, phone: e.target.value})}
+                          style={{ width: '100%', backgroundColor: '#f9fafb', border: '3px solid #000', padding: '16px', boxSizing: 'border-box', minHeight: '56px', fontSize: '16px', fontWeight: 500, outline: 'none', margin: 0, appearance: 'none', borderRadius: 0 }} 
+                          placeholder="300 1234567" 
+                        />
                       </div>
                     </div>
                     <div className="flex flex-col gap-2">
                       <label className="block font-black text-xs uppercase tracking-widest text-black">Dirección de Envío</label>
-                      <input type="text" required style={{ width: '100%', backgroundColor: '#f9fafb', border: '3px solid #000', padding: '16px', boxSizing: 'border-box', minHeight: '56px', fontSize: '16px', fontWeight: 500, outline: 'none', margin: 0, appearance: 'none', borderRadius: 0 }} placeholder="Calle 45 #32-15" />
+                      <input 
+                        type="text" 
+                        required 
+                        value={billingInfo.address}
+                        onChange={(e) => setBillingInfo({...billingInfo, address: e.target.value})}
+                        style={{ width: '100%', backgroundColor: '#f9fafb', border: '3px solid #000', padding: '16px', boxSizing: 'border-box', minHeight: '56px', fontSize: '16px', fontWeight: 500, outline: 'none', margin: 0, appearance: 'none', borderRadius: 0 }} 
+                        placeholder="Calle 45 #32-15" 
+                      />
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="flex flex-col gap-2">
@@ -278,20 +377,16 @@ export default function PagosPage() {
                   <h1 className="font-black text-3xl md:text-4xl uppercase tracking-tighter text-black border-b-4 border-black pb-4">Pagar con Tarjeta</h1>
                   <div className="flex flex-col gap-8 p-6 md:p-8 brutalist-card relative">
                     
-                    <div className="flex flex-col gap-4 bg-gray-50 border-2 border-black p-6">
-                      <div className="flex flex-col gap-2">
-                        <label className="block font-black text-xs uppercase tracking-widest text-black">Número de Tarjeta</label>
-                        <input type="text" style={{ width: '100%', backgroundColor: '#ffffff', border: '3px solid #000', padding: '16px', boxSizing: 'border-box', minHeight: '56px', fontSize: '16px', fontWeight: 500, outline: 'none', margin: 0, appearance: 'none', borderRadius: 0, fontFamily: 'monospace' }} placeholder="0000 0000 0000 0000" />
+                    <div className="flex flex-col items-center gap-6 py-10 text-center">
+                      <div className="w-20 h-20 bg-gray-100 border-4 border-black rounded-full flex items-center justify-center">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
                       </div>
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="flex flex-col gap-2">
-                          <label className="block font-black text-xs uppercase tracking-widest text-black">Vencimiento</label>
-                          <input type="text" style={{ width: '100%', backgroundColor: '#ffffff', border: '3px solid #000', padding: '16px', boxSizing: 'border-box', minHeight: '56px', fontSize: '16px', fontWeight: 500, outline: 'none', margin: 0, appearance: 'none', borderRadius: 0, fontFamily: 'monospace' }} placeholder="MM/AA" />
-                        </div>
-                        <div className="flex flex-col gap-2">
-                          <label className="block font-black text-xs uppercase tracking-widest text-black">CVV</label>
-                          <input type="text" style={{ width: '100%', backgroundColor: '#ffffff', border: '3px solid #000', padding: '16px', boxSizing: 'border-box', minHeight: '56px', fontSize: '16px', fontWeight: 500, outline: 'none', margin: 0, appearance: 'none', borderRadius: 0, fontFamily: 'monospace' }} placeholder="123" />
-                        </div>
+                      <div className="flex flex-col gap-2">
+                        <h2 className="font-black text-2xl uppercase tracking-tighter">Pago Seguro con ePayco</h2>
+                        <p className="text-gray-500 font-medium">Serás redirigido a la plataforma segura de ePayco para completar tu transacción.</p>
                       </div>
                     </div>
 
@@ -301,11 +396,10 @@ export default function PagosPage() {
                       </button>
                       <button 
                         type="button" 
-                        disabled={!paymentMethod}
-                        onClick={() => handleNextStep('thanks')} 
-                        className={`w-full sm:w-2/3 py-4 font-black uppercase tracking-widest text-center transition-all ${paymentMethod ? 'brutalist-button-success' : 'bg-gray-200 text-gray-400 border-2 border-gray-300 cursor-not-allowed'}`}
+                        onClick={handleEpaycoPayment} 
+                        className="w-full sm:w-2/3 py-4 font-black uppercase tracking-widest text-center brutalist-button-success"
                       >
-                        Confirmar Pedido
+                        Pagar Ahora
                       </button>
                     </div>
                   </div>
@@ -384,5 +478,13 @@ export default function PagosPage() {
       </main>
       <Footer />
     </>
+  )
+}
+
+export default function PagosPage() {
+  return (
+    <Suspense fallback={<div>Cargando...</div>}>
+      <PagosContent />
+    </Suspense>
   )
 }

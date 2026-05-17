@@ -1,11 +1,25 @@
-export default function Guarantees() {
+interface GuaranteesProps {
+  data?: {
+    title?: string
+    description?: string
+    ctaText?: string
+    ctaLink?: string
+  } | null
+}
+
+export default function Guarantees({ data }: GuaranteesProps) {
+  const title = data?.title || 'Garantía y Respaldo Oficial Fangan Tech'
+  const description = data?.description || 'Aseguramos la integridad y autenticidad de cada equipo. Nuestra garantía cubre respaldo oficial directo de fábrica, soporte técnico especializado (in situ o remoto), políticas de devolución transparentes sin condiciones ocultas, y tiempos de respuesta garantizados para proteger la continuidad de sus operaciones corporativas.'
+  const ctaText = data?.ctaText || 'Conocer más'
+  const ctaLink = data?.ctaLink || '#'
+
   return (
     <section className="guarantee-banner">
       <div className="container guarantee-content">
         <div className="guarantee-text animate-on-scroll reveal-perspective">
-          <h2>Garantía y Respaldo Oficial Fangan Tech</h2>
-          <p>Aseguramos la integridad y autenticidad de cada equipo. Nuestra garantía cubre respaldo oficial directo de fábrica, soporte técnico especializado (in situ o remoto), políticas de devolución transparentes sin condiciones ocultas, y tiempos de respuesta garantizados para proteger la continuidad de sus operaciones corporativas.</p>
-          <a href="#" className="btn btn-primary btn-lg btn-animated">Conocer más</a>
+          <h2>{title}</h2>
+          <p>{description}</p>
+          <a href={ctaLink} className="btn btn-primary btn-lg btn-animated">{ctaText}</a>
         </div>
         <div className="guarantee-graphic animate-on-scroll reveal-blur">
           <svg viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg">

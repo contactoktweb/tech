@@ -1,11 +1,25 @@
-export default function B2BBanner() {
+interface B2BBannerProps {
+  data?: {
+    title?: string
+    description?: string
+    ctaText?: string
+    ctaLink?: string
+  } | null
+}
+
+export default function B2BBanner({ data }: B2BBannerProps) {
+  const title = data?.title || 'Tecnología confiable para tu empresa'
+  const description = data?.description || 'Soluciones integrales de hardware, software y servicios para impulsar la productividad y competitividad de tu negocio.'
+  const ctaText = data?.ctaText || 'Solicitar Propuesta Corporativa'
+  const ctaLink = data?.ctaLink || '#contacto'
+
   return (
     <section className="b2b-banner">
       <div className="container b2b-content">
         <div className="b2b-text animate-on-scroll reveal-perspective">
-          <h2>Tecnología confiable para tu empresa</h2>
-          <p>Soluciones integrales de hardware, software y servicios para impulsar la productividad y competitividad de tu negocio.</p>
-          <a href="#contacto" className="btn btn-primary btn-animated btn-magnetic pulse-glow">Solicitar Propuesta Corporativa</a>
+          <h2>{title}</h2>
+          <p>{description}</p>
+          <a href={ctaLink} className="btn btn-primary btn-animated btn-magnetic pulse-glow">{ctaText}</a>
         </div>
         <div className="b2b-images animate-on-scroll reveal-blur">
           <div className="b2b-image-grid">

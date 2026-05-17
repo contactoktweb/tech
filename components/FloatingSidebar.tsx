@@ -1,8 +1,10 @@
 'use client'
 
 import React, { useState } from 'react'
+import { useSettings } from '@/hooks/useSettings'
 
 export default function FloatingSidebar() {
+  const { settings } = useSettings()
   const [isPqrOpen, setIsPqrOpen] = useState(false)
   const [formData, setFormData] = useState({
     nombre: '',
@@ -33,7 +35,7 @@ export default function FloatingSidebar() {
       <aside className="floating-sidebar animate-on-scroll reveal-right" aria-label="Acciones rápidas">
         {/* WhatsApp */}
         <a
-          href="https://wa.me/573144874534"
+          href={`https://wa.me/${settings?.whatsapp?.numero || '573144874534'}${settings?.whatsapp?.mensaje ? `?text=${encodeURIComponent(settings.whatsapp.mensaje)}` : ''}`}
           target="_blank"
           rel="noopener noreferrer"
           className="floating-sidebar-btn floating-sidebar-whatsapp"

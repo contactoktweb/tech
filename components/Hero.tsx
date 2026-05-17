@@ -1,6 +1,30 @@
 import Link from 'next/link'
 
-export default function Hero() {
+interface HeroProps {
+  data?: {
+    badge?: string
+    titleLine1?: string
+    titleLine2?: string
+    titleLine3?: string
+    subtitle?: string
+    ctaText?: string
+    ctaLink?: string
+    ctaSecondaryText?: string
+    ctaSecondaryLink?: string
+  } | null
+}
+
+export default function Hero({ data }: HeroProps) {
+  const badge = data?.badge || 'Soluciones Especializadas'
+  const titleLine1 = data?.titleLine1 || 'EL FUTURO'
+  const titleLine2 = data?.titleLine2 || 'DE TU EMPRESA'
+  const titleLine3 = data?.titleLine3 || 'ES AHORA'
+  const subtitle = data?.subtitle || 'Hardware de vanguardia y software corporativo para maximizar la productividad de tu organización.'
+  const ctaText = data?.ctaText || 'Explorar Catálogo'
+  const ctaLink = data?.ctaLink || '/tienda'
+  const ctaSecondaryText = data?.ctaSecondaryText || 'Contactar Ventas'
+  const ctaSecondaryLink = data?.ctaSecondaryLink || '#contacto'
+
   return (
     <section className="hero elegant-hero spotlight-container">
       <div className="hero-bg"></div>
@@ -12,18 +36,18 @@ export default function Hero() {
       <div className="hero-grid container">
         <div className="hero-content">
           <div className="hero-text-wrapper">
-            <div className="elegant-badge animate-on-scroll reveal-perspective"><span>Soluciones Especializadas</span></div>
+            <div className="elegant-badge animate-on-scroll reveal-perspective"><span>{badge}</span></div>
             <h1 className="hero-title magnetic-text">
-              <span className="title-line glitch-hover" data-reveal>EL FUTURO</span>
-              <span className="title-line glitch-hover" data-reveal>DE TU EMPRESA</span>
-              <span className="title-line title-accent glitch-hover" data-reveal>ES AHORA</span>
+              <span className="title-line glitch-hover" data-reveal>{titleLine1}</span>
+              <span className="title-line glitch-hover" data-reveal>{titleLine2}</span>
+              <span className="title-line title-accent glitch-hover" data-reveal>{titleLine3}</span>
             </h1>
             <p className="hero-subtitle" data-reveal>
-              Hardware de vanguardia y software corporativo para maximizar la productividad de tu organización.
+              {subtitle}
             </p>
             <div className="hero-cta" data-reveal>
-              <Link href="/tienda" className="btn btn-primary btn-lg btn-animated btn-magnetic pulse-glow">Explorar Catálogo</Link>
-              <a href="#contacto" className="btn btn-outline btn-lg btn-animated btn-magnetic">Contactar Ventas</a>
+              <Link href={ctaLink} className="btn btn-primary btn-lg btn-animated btn-magnetic pulse-glow">{ctaText}</Link>
+              <a href={ctaSecondaryLink} className="btn btn-outline btn-lg btn-animated btn-magnetic">{ctaSecondaryText}</a>
             </div>
           </div>
         </div>

@@ -12,6 +12,7 @@ import { homeTrustBadgesType } from './homeTrustBadges'
 import { productType } from './product'
 import { categoryType } from './category'
 import { brandType } from './brand'
+import { orderType } from './order'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -28,5 +29,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     productType,
     categoryType,
     brandType,
+    orderType,
   ],
 }

@@ -44,9 +44,11 @@ export async function POST(request: Request) {
     // 4. Procesar según el estado del pago
     // x_cod_response: 1=Aceptada, 2=Rechazada, 3=Pendiente, 4=Fallida
     const responseCode = parseInt(data.x_cod_response)
+    let targetStatus = 'creado'
 
     if (responseCode === 1) {
       console.log('✅ Pago ACEPTADO:', x_ref_payco)
+      targetStatus = 'pagado'
       
       // Enviar notificaciones por correo
       await sendAdminNotification(data)
@@ -54,12 +56,44 @@ export async function POST(request: Request) {
       if (data.x_customer_email) {
         await sendUserNotification(data.x_customer_email, data)
       }
-      
-      // AQUÍ: Lógica para marcar pedido como pagado en tu DB
     } else if (responseCode === 3) {
       console.log('⏳ Pago PENDIENTE:', x_ref_payco)
+      targetStatus = 'pendiente'
     } else {
       console.log('❌ Pago FALLIDO/RECHAZADO:', x_ref_payco)
+      targetStatus = 'fallido'
+    }
+
+    // Actualizar en Sanity
+    const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID
+    const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET
+    const token = process.env.SANITY_API_TOKEN
+
+    const invoiceRef = data.x_id_invoice || data.x_ref_payco
+    if (projectId && dataset && token && invoiceRef) {
+      try {
+        const { createClient } = await import('next-sanity')
+        const writeClient = createClient({
+          projectId,
+          dataset,
+          apiVersion: '2026-05-17',
+          token,
+          useCdn: false,
+        })
+
+        const query = `*[_type == "order" && invoice == $invoiceRef][0]._id`
+        const orderId = await writeClient.fetch(query, { invoiceRef })
+
+        if (orderId) {
+          console.log(`📝 Webhook actualizando estado de ${invoiceRef} a: ${targetStatus}`)
+          await writeClient.patch(orderId).set({ status: targetStatus }).commit()
+          console.log(`✅ Pedido actualizado por webhook`)
+        } else {
+          console.warn(`⚠️ Webhook: No se encontró orden en Sanity con ref: ${invoiceRef}`)
+        }
+      } catch (err) {
+        console.error('💥 Webhook: Error actualizando orden en Sanity:', err)
+      }
     }
 
     // ePayco espera un OK para dejar de enviar el webhook

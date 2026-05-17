@@ -28,14 +28,30 @@ function ResultadoContent() {
             
             // Codigos ePayco: 1=Aceptada, 2=Rechazada, 3=Pendiente, 4=Fallida
             const code = parseInt(data.x_cod_response)
+            const invoice = data.x_id_invoice || data.x_ref_payco
+            let targetStatus = 'creado'
+
             if (code === 1) {
               setStatus('success')
+              targetStatus = 'pagado'
               clearCart()
             } else if (code === 3) {
               setStatus('pending')
-              clearCart() // Opcional: limpiar si queda pendiente
+              targetStatus = 'pendiente'
+              clearCart()
             } else {
               setStatus('error')
+              targetStatus = 'fallido'
+            }
+
+            if (invoice) {
+              fetch('/api/pedidos/actualizar', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ invoice, status: targetStatus })
+              }).catch(err => console.error('Error auto-updating order:', err))
             }
           } else {
             setStatus('error')

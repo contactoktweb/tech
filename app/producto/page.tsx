@@ -203,8 +203,8 @@ function ProductoPageContent() {
               </div>
               <div>
                 <p className="font-bold text-black text-xs leading-tight">{quantity}x {activeProduct.name}</p>
-                {isHP && (
-                  <p className="text-[10px] text-black/60 uppercase font-bold tracking-wider mt-1">{selectedCPU} | {selectedRAM}</p>
+                {specsString && (
+                  <p className="text-[10px] text-black/60 uppercase font-bold tracking-wider mt-1">{specsString}</p>
                 )}
               </div>
             </div>

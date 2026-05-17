@@ -22,6 +22,7 @@ function PagosContent() {
   const [paymentMethod, setPaymentMethod] = useState<string>('card')
   const [selectedDept, setSelectedDept] = useState<string>('')
   const [selectedCity, setSelectedCity] = useState<string>('')
+  const [isProcessing, setIsProcessing] = useState<boolean>(false)
   const [billingInfo, setBillingInfo] = useState({
     name: '',
     doc: '',
@@ -52,7 +53,7 @@ function PagosContent() {
     setStep(nextStep)
   }
 
-  const handleEpaycoPayment = () => {
+  const handleEpaycoPayment = async () => {
     // @ts-ignore
     const epaycoInstance = window.ePayco;
 
@@ -61,37 +62,74 @@ function PagosContent() {
       return
     }
 
-    const handler = epaycoInstance.checkout.configure({
-      key: process.env.NEXT_PUBLIC_EPAYCO_PUBLIC_KEY,
-      test: process.env.NEXT_PUBLIC_EPAYCO_TEST === 'true'
-    })
+    setIsProcessing(true)
+    const invoiceNum = `ORD-${Date.now()}`
 
-    const data = {
-      name: "Compra Tech Shop",
-      description: cart.map(item => `${item.quantity}x ${item.name}`).join(', '),
-      invoice: `ORD-${Date.now()}`,
-      currency: "cop",
-      amount: cartTotal.toString(),
-      tax_base: "0",
-      tax: "0",
-      country: "co",
-      lang: "es",
-      external: "false",
-      onpage: "true",
-      test: process.env.NEXT_PUBLIC_EPAYCO_TEST === 'true',
-      // Customer info
-      name_billing: billingInfo.name,
-      address_billing: `${billingInfo.address}, ${selectedCity}, ${selectedDept}`,
-      type_doc_billing: "cc",
-      mobile_phone_billing: billingInfo.phone,
-      number_doc_billing: billingInfo.doc,
-      email_billing: billingInfo.email,
-      // Response URLs
-      confirmation: `${window.location.origin}/api/pagos/confirmacion`,
-      response: `${window.location.origin}/pagos/resultado`,
+    try {
+      // 1. Crear el pedido en la base de datos de Sanity primero
+      const res = await fetch('/api/pedidos/crear', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          invoice: invoiceNum,
+          total: cartTotal,
+          customer: {
+            name: billingInfo.name,
+            email: billingInfo.email,
+            doc: billingInfo.doc,
+            phone: billingInfo.phone,
+            address: billingInfo.address,
+            city: selectedCity,
+            department: selectedDept
+          },
+          items: cart
+        })
+      })
+
+      if (!res.ok) {
+        throw new Error('No se pudo registrar el pedido en Sanity')
+      }
+
+      // 2. Configurar y abrir ePayco
+      const handler = epaycoInstance.checkout.configure({
+        key: process.env.NEXT_PUBLIC_EPAYCO_PUBLIC_KEY,
+        test: process.env.NEXT_PUBLIC_EPAYCO_TEST === 'true'
+      })
+
+      const data = {
+        name: "Compra Tech Shop",
+        description: cart.map(item => `${item.quantity}x ${item.name}`).join(', '),
+        invoice: invoiceNum,
+        currency: "cop",
+        amount: cartTotal.toString(),
+        tax_base: "0",
+        tax: "0",
+        country: "co",
+        lang: "es",
+        external: "false",
+        onpage: "true",
+        test: process.env.NEXT_PUBLIC_EPAYCO_TEST === 'true',
+        // Customer info
+        name_billing: billingInfo.name,
+        address_billing: `${billingInfo.address}, ${selectedCity}, ${selectedDept}`,
+        type_doc_billing: "cc",
+        mobile_phone_billing: billingInfo.phone,
+        number_doc_billing: billingInfo.doc,
+        email_billing: billingInfo.email,
+        // Response URLs
+        confirmation: `${window.location.origin}/api/pagos/confirmacion`,
+        response: `${window.location.origin}/pagos/resultado`,
+      }
+
+      handler.open(data)
+    } catch (err) {
+      console.error(err)
+      alert('Hubo un inconveniente al procesar tu pedido. Por favor, intenta de nuevo.')
+    } finally {
+      setIsProcessing(false)
     }
-
-    handler.open(data)
   }
 
   if (cart.length === 0 && step !== 'thanks') {
@@ -396,10 +434,15 @@ function PagosContent() {
                       </button>
                       <button 
                         type="button" 
+                        disabled={isProcessing}
                         onClick={handleEpaycoPayment} 
-                        className="w-full sm:w-2/3 py-4 font-black uppercase tracking-widest text-center brutalist-button-success"
+                        className={`w-full sm:w-2/3 py-4 font-black uppercase tracking-widest text-center transition-all ${
+                          isProcessing 
+                            ? 'bg-gray-200 border-3 border-gray-400 text-gray-500 cursor-not-allowed shadow-none' 
+                            : 'brutalist-button-success'
+                        }`}
                       >
-                        Pagar Ahora
+                        {isProcessing ? 'Procesando...' : 'Pagar Ahora'}
                       </button>
                     </div>
                   </div>

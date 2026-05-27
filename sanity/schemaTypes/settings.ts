@@ -81,5 +81,11 @@ export const settingsType = defineType({
       type: 'url',
       description: 'Enlace al que se redirigirá al hacer clic en el mapa (Ej: Enlace directo a Google Maps)',
     }),
+    defineField({
+      name: 'emailPqr',
+      title: 'Correo para recibir PQR',
+      type: 'string',
+      description: 'El correo electrónico donde llegarán las notificaciones de nuevas PQR',
+    }),
   ],
 })

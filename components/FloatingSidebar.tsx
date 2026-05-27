@@ -13,16 +13,36 @@ export default function FloatingSidebar() {
     tipo: 'peticion',
     mensaje: ''
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setIsSubmitted(true)
-    setTimeout(() => {
-      setIsSubmitted(false)
-      setIsPqrOpen(false)
-      setFormData({ nombre: '', email: '', telefono: '', tipo: 'peticion', mensaje: '' })
-    }, 3000)
+    setIsSubmitting(true)
+    try {
+      const res = await fetch('/api/pqr', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      })
+
+      if (res.ok) {
+        setIsSubmitted(true)
+        setTimeout(() => {
+          setIsSubmitted(false)
+          setIsPqrOpen(false)
+          setFormData({ nombre: '', email: '', telefono: '', tipo: 'peticion', mensaje: '' })
+        }, 3000)
+      } else {
+        const data = await res.json()
+        alert(data.error || 'Hubo un error al enviar la solicitud.')
+      }
+    } catch (error) {
+      console.error(error)
+      alert('Error de conexión al enviar la solicitud.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -164,8 +184,8 @@ export default function FloatingSidebar() {
                     placeholder="Describe tu solicitud con el mayor detalle posible..."
                   />
                 </div>
-                <button type="submit" className="btn btn-primary btn-lg pqr-submit">
-                  Enviar Solicitud
+                <button type="submit" className="btn btn-primary btn-lg pqr-submit" disabled={isSubmitting}>
+                  {isSubmitting ? 'Enviando...' : 'Enviar Solicitud'}
                 </button>
               </form>
             )}

@@ -24,6 +24,7 @@ export interface Settings {
     tiktok: string
   }
   googleMaps: string
+  googleMapsUrl?: string
 }
 
 export function useSettings() {

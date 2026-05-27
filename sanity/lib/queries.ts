@@ -8,7 +8,8 @@ export const settingsQuery = groq`*[_type == "settings"][0]{
   contacto,
   whatsapp,
   redesSociales,
-  googleMaps
+  googleMaps,
+  googleMapsUrl
 }`
 
 // Secciones de la Página de Inicio

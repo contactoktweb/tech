@@ -104,18 +104,27 @@ export default function Footer() {
                 </a>
               )}
             </div>
-            <div className="footer-map">
+            <div className="footer-map" style={{ position: 'relative' }}>
+              {settings?.googleMapsUrl && (
+                <a 
+                  href={settings.googleMapsUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  style={{ position: 'absolute', inset: 0, zIndex: 10 }}
+                  aria-label="Abrir en Google Maps"
+                />
+              )}
               {settings?.googleMaps ? (
                 <div 
                   dangerouslySetInnerHTML={{ __html: settings.googleMaps.replace(/width="\d+"/, 'width="100%"').replace(/height="\d+"/, 'height="120"') }}
-                  style={{ border: 0, filter: 'grayscale(1) invert(0.9) contrast(1.2)' }}
+                  style={{ border: 0, filter: 'grayscale(1) invert(0.9) contrast(1.2)', pointerEvents: settings?.googleMapsUrl ? 'none' : 'auto' }}
                 />
               ) : (
                 <iframe 
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.5!2d-75.6!3d6.2!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMTInMDAuMCJOIDc1wrAzNicwMC4wIlc!5e0!3m2!1ses!2sco!4v1234567890"
                   width="100%" 
                   height="120" 
-                  style={{ border: 0, filter: 'grayscale(1) invert(0.9) contrast(1.2)' }} 
+                  style={{ border: 0, filter: 'grayscale(1) invert(0.9) contrast(1.2)', pointerEvents: settings?.googleMapsUrl ? 'none' : 'auto' }} 
                   allowFullScreen={false}
                   loading="lazy" 
                   title="Ubicación de FANGAN TECH en Google Maps">

@@ -75,5 +75,11 @@ export const settingsType = defineType({
       type: 'text',
       description: 'Pega aquí el código <iframe> que te da Google Maps',
     }),
+    defineField({
+      name: 'googleMapsUrl',
+      title: 'URL de Redirección del Mapa',
+      type: 'url',
+      description: 'Enlace al que se redirigirá al hacer clic en el mapa (Ej: Enlace directo a Google Maps)',
+    }),
   ],
 })

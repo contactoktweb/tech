@@ -35,6 +35,12 @@ export const homeSoftwareType = defineType({
               title: 'Nombre',
               type: 'string',
             }),
+            defineField({
+              name: 'logoSvg',
+              title: 'Código SVG del Logo',
+              description: 'Pega el código SVG completo aquí. (Ej: <svg>...</svg>)',
+              type: 'text',
+            }),
           ],
         },
       ],

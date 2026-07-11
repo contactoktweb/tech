@@ -2,6 +2,7 @@ interface PortfolioCategory {
   title: string
   description: string
   iconType: 'laptop' | 'grid' | 'software' | 'ipad' | 'tv' | 'network' | string
+  iconSvg?: string
   detailsLink?: string
   buyLink?: string
 }
@@ -128,7 +129,11 @@ export default function Categories({ data }: CategoriesProps) {
             return (
               <article key={idx} className={`category-card animate-on-scroll ${revealClass}`}>
                 <div className="category-image">
-                  {iconMap[category.iconType] || iconMap.laptop}
+                  {category.iconSvg ? (
+                    <div dangerouslySetInnerHTML={{ __html: category.iconSvg }} style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }} />
+                  ) : (
+                    iconMap[category.iconType] || iconMap.laptop
+                  )}
                 </div>
                 <h3>{category.title}</h3>
                 <p>{category.description}</p>

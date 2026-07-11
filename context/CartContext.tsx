@@ -13,7 +13,7 @@ export interface CartItem {
 
 interface CartContextType {
   cart: CartItem[]
-  addToCart: (product: Omit<CartItem, 'quantity'>) => void
+  addToCart: (product: Omit<CartItem, 'quantity'> & { quantity?: number }) => void
   removeFromCart: (id: string) => void
   updateQuantity: (id: string, quantity: number) => void
   clearCart: () => void
@@ -45,17 +45,20 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem('fangan_cart', JSON.stringify(cart))
   }, [cart])
 
-  const addToCart = (product: Omit<CartItem, 'quantity'>) => {
+  const addToCart = (product: Omit<CartItem, 'quantity'> & { quantity?: number }) => {
+    const qty = product.quantity || 1;
+    const { quantity, ...productData } = product as any;
+    
     setCart(prevCart => {
-      const existingItem = prevCart.find(item => item.id === product.id)
+      const existingItem = prevCart.find(item => item.id === productData.id)
       if (existingItem) {
         return prevCart.map(item =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
+          item.id === productData.id
+            ? { ...item, quantity: item.quantity + qty }
             : item
         )
       }
-      return [...prevCart, { ...product, quantity: 1 }]
+      return [...prevCart, { ...productData, quantity: qty }]
     })
 
     toast({

@@ -37,7 +37,7 @@ export const homePaymentsType = defineType({
             }),
             defineField({
               name: 'iconType',
-              title: 'Tipo de Icono',
+              title: 'Tipo de Icono (Legacy)',
               type: 'string',
               options: {
                 list: [
@@ -47,6 +47,12 @@ export const homePaymentsType = defineType({
                   { title: 'Efectivo / Monedas', value: 'cash' },
                 ],
               },
+            }),
+            defineField({
+              name: 'iconSvg',
+              title: 'Código SVG Personalizado (Opcional)',
+              description: 'Pega el código SVG completo aquí para sobrescribir el icono por defecto. (Ej: <svg>...</svg>)',
+              type: 'text',
             }),
           ],
         },

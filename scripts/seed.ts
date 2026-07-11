@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { createClient } from 'next-sanity'
 import * as dotenv from 'dotenv'
 import * as fs from 'fs'

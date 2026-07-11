@@ -138,7 +138,7 @@ export default function Footer() {
           <div className="footer-logo">
             <Image
               src={getLogoLargoUrl()}
-              alt={settings?.title || "FANGAN TECH - Tecnología que Transforma"}
+              alt={"FANGAN TECH - Tecnología que Transforma"}
               width={220}
               height={55}
               style={{ height: 'auto', maxHeight: '55px', width: 'auto', filter: 'brightness(0) invert(1)' }}

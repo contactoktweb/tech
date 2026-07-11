@@ -25,5 +25,11 @@ export const homeGuaranteesType = defineType({
       title: 'Enlace de Acción',
       type: 'string',
     }),
+    defineField({
+      name: 'graphicSvg',
+      title: 'Gráfico SVG',
+      description: 'Pega el código SVG completo aquí para sobrescribir el gráfico animado de garantía por defecto. (Ej: <svg>...</svg>)',
+      type: 'text',
+    }),
   ],
 })

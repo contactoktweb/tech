@@ -4,6 +4,7 @@ interface GuaranteesProps {
     description?: string
     ctaText?: string
     ctaLink?: string
+    graphicSvg?: string
   } | null
 }
 
@@ -22,11 +23,15 @@ export default function Guarantees({ data }: GuaranteesProps) {
           <a href={ctaLink} className="btn btn-primary btn-lg btn-animated">{ctaText}</a>
         </div>
         <div className="guarantee-graphic animate-on-scroll reveal-blur">
-          <svg viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M150 20L270 80V140C270 180 220 200 150 200C80 200 30 180 30 140V80L150 20Z" stroke="currentColor" strokeWidth="3" fill="none"/>
-            <path d="M150 50L230 95V135C230 160 195 175 150 175C105 175 70 160 70 135V95L150 50Z" fill="currentColor" opacity="0.1"/>
-            <path d="M110 110L140 140L190 90" stroke="currentColor" strokeWidth="4" strokeLinecap="square" strokeLinejoin="miter"/>
-          </svg>
+          {data?.graphicSvg ? (
+            <div dangerouslySetInnerHTML={{ __html: data.graphicSvg }} style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }} />
+          ) : (
+            <svg viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M150 20L270 80V140C270 180 220 200 150 200C80 200 30 180 30 140V80L150 20Z" stroke="currentColor" strokeWidth="3" fill="none"/>
+              <path d="M150 50L230 95V135C230 160 195 175 150 175C105 175 70 160 70 135V95L150 50Z" fill="currentColor" opacity="0.1"/>
+              <path d="M110 110L140 140L190 90" stroke="currentColor" strokeWidth="4" strokeLinecap="square" strokeLinejoin="miter"/>
+            </svg>
+          )}
         </div>
       </div>
     </section>

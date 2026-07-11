@@ -2,6 +2,7 @@ interface TrustBadgeItem {
   title: string
   description: string
   iconType: 'shield-check' | 'clock-check' | 'support' | 'delivery' | string
+  iconSvg?: string
 }
 
 interface TrustBadgesProps {
@@ -72,7 +73,11 @@ export default function TrustBadges({ data }: TrustBadgesProps) {
           {badges.map((badge, idx) => (
             <div key={idx} className="badge-item">
               <div className="badge-icon">
-                {iconMap[badge.iconType] || iconMap['shield-check']}
+                {badge.iconSvg ? (
+                  <div dangerouslySetInnerHTML={{ __html: badge.iconSvg }} style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }} />
+                ) : (
+                  iconMap[badge.iconType] || iconMap['shield-check']
+                )}
               </div>
               <h4>{badge.title}</h4>
               <p>{badge.description}</p>

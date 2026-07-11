@@ -36,14 +36,22 @@ export const homeAboutQuery = groq`*[_type == "homeAbout"][0]{
 export const homeCategoriesQuery = groq`*[_type == "homeCategories"][0]{
   title,
   subtitle,
-  categories
+  categories[]{
+    title,
+    description,
+    iconType,
+    iconSvg,
+    detailsLink,
+    buyLink
+  }
 }`
 
 export const homeGuaranteesQuery = groq`*[_type == "homeGuarantees"][0]{
   title,
   description,
   ctaText,
-  ctaLink
+  ctaLink,
+  graphicSvg
 }`
 
 export const homeServicesQuery = groq`*[_type == "homeServices"][0]{
@@ -56,7 +64,10 @@ export const homeSoftwareQuery = groq`*[_type == "homeSoftware"][0]{
   badge,
   title,
   description,
-  logos,
+  logos[]{
+    name,
+    logoSvg
+  },
   ctaText,
   ctaLink
 }`
@@ -65,18 +76,30 @@ export const homeB2BQuery = groq`*[_type == "homeB2B"][0]{
   title,
   description,
   ctaText,
-  ctaLink
+  ctaLink,
+  graphics[]{
+    svgCode
+  }
 }`
 
 export const homePaymentsQuery = groq`*[_type == "homePayments"][0]{
   badge,
   title,
   description,
-  paymentMethods
+  paymentMethods[]{
+    name,
+    iconType,
+    iconSvg
+  }
 }`
 
 export const homeTrustBadgesQuery = groq`*[_type == "homeTrustBadges"][0]{
-  badges
+  badges[]{
+    title,
+    description,
+    iconType,
+    iconSvg
+  }
 }`
 
 // Productos para la tienda y filtros

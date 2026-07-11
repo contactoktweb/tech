@@ -1,6 +1,7 @@
 interface PaymentMethod {
   name: string
   iconType: 'card' | 'pse' | 'phone' | 'cash' | string
+  iconSvg?: string
 }
 
 interface PaymentsBannerProps {
@@ -66,7 +67,11 @@ export default function PaymentsBanner({ data }: PaymentsBannerProps) {
             {paymentMethods.map((method, idx) => (
               <div key={idx} className="payment-method-item">
                 <div className="payment-icon">
-                  {iconMap[method.iconType] || iconMap.card}
+                  {method.iconSvg ? (
+                    <div dangerouslySetInnerHTML={{ __html: method.iconSvg }} style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }} />
+                  ) : (
+                    iconMap[method.iconType] || iconMap.card
+                  )}
                 </div>
                 <span>{method.name}</span>
               </div>

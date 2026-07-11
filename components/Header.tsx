@@ -48,7 +48,7 @@ export default function Header() {
           <Link href="/" className="logo">
             <Image
               src={getLogoLargoUrl()}
-              alt={settings?.title || "FANGAN TECH - Tecnología que Transforma"}
+              alt={"FANGAN TECH - Tecnología que Transforma"}
               width={280}
               height={75}
               priority

@@ -371,7 +371,7 @@ function ProductoPageContent() {
                 activeProduct.variations.map((v, i) => (
                   <tr key={i}>
                     <td>{v.name}</td>
-                    <td>{v.value}</td>
+                    <td>{selectedOptions[v.name] || (v.options && v.options.length > 0 ? v.options[0].value : '')}</td>
                   </tr>
                 ))
               ) : (

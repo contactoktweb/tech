@@ -37,7 +37,7 @@ export const homeCategoriesType = defineType({
             }),
             defineField({
               name: 'iconType',
-              title: 'Tipo de Icono / Categoría',
+              title: 'Tipo de Icono / Categoría (Legacy)',
               type: 'string',
               options: {
                 list: [
@@ -49,6 +49,12 @@ export const homeCategoriesType = defineType({
                   { title: 'Redes (Conectividad)', value: 'network' },
                 ],
               },
+            }),
+            defineField({
+              name: 'iconSvg',
+              title: 'Código SVG Personalizado (Opcional)',
+              description: 'Pega el código SVG completo aquí para sobrescribir el icono por defecto. (Ej: <svg>...</svg>)',
+              type: 'text',
             }),
             defineField({
               name: 'detailsLink',

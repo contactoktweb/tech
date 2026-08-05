@@ -163,5 +163,8 @@ export const aboutPageQuery = groq`*[_type == "aboutPage"][0]{
     name,
     role,
     image
-  }
+  },
+  hrConsultingTitle,
+  hrConsultingDescription,
+  hrConsultingFeatures
 }`

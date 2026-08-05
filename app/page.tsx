@@ -1,6 +1,7 @@
 import TopBar from '@/components/TopBar'
 import Header from '@/components/Header'
 import Hero from '@/components/Hero'
+import TrustedBy from '@/components/TrustedBy'
 import Categories from '@/components/Categories'
 import Guarantees from '@/components/Guarantees'
 import ServicesSection from '@/components/ServicesSection'
@@ -84,6 +85,7 @@ export default async function Home() {
       <FloatingSidebar />
       <main>
         <Hero data={heroData} />
+        <TrustedBy />
         <AboutSection data={aboutData} />
         <Categories data={categoriesData} />
         <Guarantees data={guaranteesData} />

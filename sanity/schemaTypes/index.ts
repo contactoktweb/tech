@@ -13,6 +13,7 @@ import { productType } from './product'
 import { categoryType } from './category'
 import { brandType } from './brand'
 import { orderType } from './order'
+import { aboutPageType } from './aboutPage'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -30,5 +31,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     categoryType,
     brandType,
     orderType,
+    aboutPageType,
   ],
 }

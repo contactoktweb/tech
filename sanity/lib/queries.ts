@@ -139,3 +139,21 @@ export const productBySlugQuery = groq`*[_type == "product" && slug.current == $
   featured,
   variations
 }`
+
+// Página Nosotros
+export const aboutPageQuery = groq`*[_type == "aboutPage"][0]{
+  title,
+  introText,
+  mission,
+  vision,
+  purpose,
+  slogans,
+  values,
+  signaturePhrase,
+  team[]{
+    _key,
+    name,
+    role,
+    image
+  }
+}`

@@ -26,6 +26,16 @@ export default function Footer() {
   return (
     <footer id="contacto" className="footer">
       <div className="container">
+        
+        <div className="relative rounded-3xl mb-16 overflow-hidden bg-white/5 border border-white/10 shadow-2xl group">
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-transparent to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+          <div className="relative z-10 p-10 md:p-14 text-center backdrop-blur-md">
+            <h3 className="text-2xl md:text-3xl font-light text-gray-300 leading-relaxed max-w-4xl mx-auto">
+              Más de <span className="font-extrabold text-white">5 organizaciones</span> ya confían en <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">Fangan Tech</span> para impulsar su transformación tecnológica.
+            </h3>
+          </div>
+        </div>
+
         <div className="footer-grid">
           <div className="footer-col">
             <h2 className="footer-col-title">Enlace Rápidos</h2>

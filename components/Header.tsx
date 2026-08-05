@@ -57,9 +57,10 @@ export default function Header() {
           </Link>
           
           <ul className={`nav-links ${isMenuOpen ? 'active' : ''}`}>
-            <li><Link href="/#nosotros" className="nav-link">Nosotros</Link></li>
-            <li><Link href="/#portafolio" className="nav-link">Portafolio</Link></li>
+            <li><Link href="/nosotros" className="nav-link">Nosotros</Link></li>
+            <li><Link href="/casos-de-exito" className="nav-link">Portafolio</Link></li>
             <li><Link href="/#servicios" className="nav-link">Servicios</Link></li>
+            <li><Link href="/clientes" className="nav-link">Clientes</Link></li>
             <li><Link href="/#contacto" className="nav-link">Contáctenos</Link></li>
           </ul>
 
@@ -102,10 +103,11 @@ export default function Header() {
         {/* Mobile Menu */}
         <div className={`mobile-menu ${isMenuOpen ? 'active' : ''}`}>
           <ul className="mobile-nav-links">
-            <li><Link href="/#nosotros" onClick={toggleMenu}>Nosotros</Link></li>
-            <li><Link href="/#portafolio" onClick={toggleMenu}>Portafolio</Link></li>
+            <li><Link href="/nosotros" onClick={toggleMenu}>Nosotros</Link></li>
+            <li><Link href="/casos-de-exito" onClick={toggleMenu}>Portafolio</Link></li>
             <li><Link href="/tienda" onClick={toggleMenu}>Tienda</Link></li>
             <li><Link href="/#servicios" onClick={toggleMenu}>Servicios</Link></li>
+            <li><Link href="/clientes" onClick={toggleMenu}>Clientes</Link></li>
             <li><Link href="/#contacto" onClick={toggleMenu}>Contáctenos</Link></li>
           </ul>
           <a

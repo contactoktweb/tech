@@ -24,9 +24,13 @@ export default async function NosotrosPage() {
 
   // Default values based on the prompt if not found in Sanity
   const title = data?.title || 'Nosotros'
+  const historyTitle = data?.historyTitle || 'Nuestra Historia'
   const introText = data?.introText || 'Fangan Tech fuera mucho más que una empresa que vende computadores, impresoras y cámaras. La visión que hemos construido juntos es que la tecnología sea una herramienta para la inclusión, inspirada en la historia de Daniel, pero sin que la empresa dependa únicamente del tema del autismo.\n\nCreo que esta misión y visión pueden darle una identidad sólida y con proyección internacional.'
+  const missionTitle = data?.missionTitle || 'Misión'
   const mission = data?.mission || 'En Fangan Tech desarrollamos e implementamos soluciones tecnológicas que impulsan la transformación digital de empresas, instituciones y comunidades. Creemos que la tecnología debe ser una herramienta para generar oportunidades, promover la inclusión y mejorar la calidad de vida de las personas, actuando siempre con innovación, compromiso y responsabilidad social.'
+  const visionTitle = data?.visionTitle || 'Visión'
   const vision = data?.vision || 'Ser una empresa líder en soluciones tecnológicas en Colombia y América, reconocida por combinar innovación, excelencia e impacto social. Aspiramos a demostrar que la tecnología puede derribar barreras, fortalecer organizaciones y construir un futuro más inclusivo para todas las personas.'
+  const purposeTitle = data?.purposeTitle || 'Nuestro Propósito'
   const purpose = data?.purpose || 'Transformar vidas a través de la tecnología.'
   const slogans = data?.slogans || [
     'Tecnología que transforma vidas.',
@@ -35,6 +39,8 @@ export default async function NosotrosPage() {
     'Innovación sin barreras.',
     'Construyendo un futuro más inclusivo.'
   ]
+  const valuesTitle = data?.valuesTitle || 'Los valores de Fangan Tech'
+  const valuesSubtitle = data?.valuesSubtitle || 'Principios que guían nuestro trabajo día a día y nos permiten ofrecer siempre lo mejor a nuestros clientes y comunidad.'
   const values = data?.values || [
     'Innovación',
     'Inclusión',
@@ -46,6 +52,8 @@ export default async function NosotrosPage() {
     'Empatía'
   ]
   const signaturePhrase = data?.signaturePhrase || '“La tecnología tiene sentido cuando mejora la vida de las personas.”'
+  const teamTitle = data?.teamTitle || 'Nuestro Equipo'
+  const teamSubtitle = data?.teamSubtitle || 'Conoce a las personas detrás de Fangan Tech, un equipo comprometido con la innovación y el impacto social.'
   const team = data?.team || []
 
   return (
@@ -70,7 +78,7 @@ export default async function NosotrosPage() {
         {/* Intro */}
         <section className="py-16 px-6 sm:px-10 lg:px-20 max-w-5xl mx-auto">
           <div className="bg-white rounded-2xl shadow-xl p-8 sm:p-12 -mt-24 relative z-20 border border-gray-100">
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6">Nuestra Historia</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6">{historyTitle}</h2>
             <div className="text-gray-700 leading-relaxed space-y-4 whitespace-pre-wrap">
               {introText}
             </div>
@@ -86,7 +94,7 @@ export default async function NosotrosPage() {
                 <Target className="w-7 h-7" strokeWidth={1.5} />
               </div>
               <h2 className="text-3xl font-extrabold text-gray-900 mb-5 tracking-tight">
-                Misión
+                {missionTitle}
               </h2>
               <p className="text-gray-600 leading-relaxed text-lg font-light">
                 {mission}
@@ -101,7 +109,7 @@ export default async function NosotrosPage() {
                 <Eye className="w-7 h-7" strokeWidth={1.5} />
               </div>
               <h2 className="text-3xl font-extrabold text-gray-900 mb-5 tracking-tight">
-                Visión
+                {visionTitle}
               </h2>
               <p className="text-gray-600 leading-relaxed text-lg font-light">
                 {vision}
@@ -113,7 +121,7 @@ export default async function NosotrosPage() {
         {/* Purpose y Slogans */}
         <section className="py-16 bg-white border-y border-gray-100">
           <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-20 text-center">
-            <h2 className="text-sm font-bold tracking-widest text-primary uppercase mb-2">Nuestro Propósito</h2>
+            <h2 className="text-sm font-bold tracking-widest text-primary uppercase mb-2">{purposeTitle}</h2>
             <p className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-12">
               {purpose}
             </p>
@@ -131,9 +139,9 @@ export default async function NosotrosPage() {
         {/* Valores */}
         <section className="py-20 px-6 sm:px-10 lg:px-20 max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900">Los valores de Fangan Tech</h2>
+            <h2 className="text-3xl font-bold text-gray-900">{valuesTitle}</h2>
             <p className="text-gray-500 mt-4 max-w-2xl mx-auto">
-              Principios que guían nuestro trabajo día a día y nos permiten ofrecer siempre lo mejor a nuestros clientes y comunidad.
+              {valuesSubtitle}
             </p>
           </div>
           
@@ -152,9 +160,9 @@ export default async function NosotrosPage() {
         {team.length > 0 && (
           <section className="py-20 px-6 sm:px-10 lg:px-20 max-w-7xl mx-auto border-t border-gray-100">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-gray-900">Nuestro Equipo</h2>
+              <h2 className="text-3xl font-bold text-gray-900">{teamTitle}</h2>
               <p className="text-gray-500 mt-4 max-w-2xl mx-auto">
-                Conoce a las personas detrás de Fangan Tech, un equipo comprometido con la innovación y el impacto social.
+                {teamSubtitle}
               </p>
             </div>
             

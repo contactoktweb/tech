@@ -143,13 +143,21 @@ export const productBySlugQuery = groq`*[_type == "product" && slug.current == $
 // Página Nosotros
 export const aboutPageQuery = groq`*[_type == "aboutPage"][0]{
   title,
+  historyTitle,
   introText,
+  missionTitle,
   mission,
+  visionTitle,
   vision,
+  purposeTitle,
   purpose,
   slogans,
+  valuesTitle,
+  valuesSubtitle,
   values,
   signaturePhrase,
+  teamTitle,
+  teamSubtitle,
   team[]{
     _key,
     name,

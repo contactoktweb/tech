@@ -1,6 +1,8 @@
 'use client'
 
 import React, { useState } from 'react'
+import Image from 'next/image'
+import { Users } from 'lucide-react'
 
 interface ServiceItem {
   title: string
@@ -18,6 +20,9 @@ interface ServicesSectionProps {
     title?: string
     subtitle?: string
     categories?: ServiceCategory[]
+    hrConsultingTitle?: string
+    hrConsultingDescription?: string
+    hrConsultingFeatures?: string[]
   } | null
 }
 
@@ -111,6 +116,15 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
   const subtitle = data?.subtitle || 'Soluciones tecnológicas integrales para impulsar tu empresa'
   const categories = data?.categories && data.categories.length > 0 ? data.categories : defaultServicesData
 
+  const hrConsultingTitle = data?.hrConsultingTitle || 'Consultoría en RRHH'
+  const hrConsultingDescription = data?.hrConsultingDescription || 'Nuestra línea de consultoría en Recursos Humanos está diseñada para potenciar el talento de tu organización, abarcando desde la atracción de los mejores perfiles hasta su desarrollo y bienestar integral.'
+  const hrConsultingFeatures = data?.hrConsultingFeatures || [
+    'Selección y Reclutamiento',
+    'Bienestar Organizacional',
+    'Capacitación y Formación',
+    'Desarrollo de Talento'
+  ]
+
   return (
     <section id="servicios" className="services-section">
       <div className="container">
@@ -165,6 +179,43 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
               </div>
             )
           })}
+        </div>
+
+        {/* Consultoría en RRHH Section */}
+        <div className="mt-20 border-t border-gray-200 pt-20">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 text-primary mb-6">
+                <Users className="w-6 h-6" />
+              </div>
+              <h2 className="text-3xl font-bold text-gray-900 mb-6">{hrConsultingTitle}</h2>
+              <p className="text-lg text-gray-600 leading-relaxed mb-8">
+                {hrConsultingDescription}
+              </p>
+              
+              <div className="space-y-4">
+                {hrConsultingFeatures.map((feature: string, i: number) => (
+                  <div key={i} className="flex items-center">
+                    <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center mr-4">
+                      <div className="w-2 h-2 rounded-full bg-primary"></div>
+                    </div>
+                    <span className="text-gray-800 font-medium text-lg">{feature}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            <div className="relative aspect-square sm:aspect-video lg:aspect-square rounded-3xl overflow-hidden shadow-xl border border-gray-100">
+              <Image 
+                src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop" 
+                alt="Consultoría en RRHH"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent pointer-events-none"></div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

@@ -158,30 +158,7 @@ export const aboutPageType = defineType({
         },
       ],
     }),
-    defineField({
-      name: 'hrConsultingTitle',
-      title: 'Título de Consultoría en RRHH',
-      type: 'string',
-      initialValue: 'Consultoría en RRHH',
-    }),
-    defineField({
-      name: 'hrConsultingDescription',
-      title: 'Descripción de Consultoría en RRHH',
-      type: 'text',
-      initialValue: 'Nuestra línea de consultoría en Recursos Humanos está diseñada para potenciar el talento de tu organización, abarcando desde la atracción de los mejores perfiles hasta su desarrollo y bienestar integral.',
-    }),
-    defineField({
-      name: 'hrConsultingFeatures',
-      title: 'Características de Consultoría en RRHH',
-      type: 'array',
-      of: [{ type: 'string' }],
-      initialValue: [
-        'Selección y Reclutamiento',
-        'Bienestar Organizacional',
-        'Capacitación y Formación',
-        'Desarrollo de Talento'
-      ],
-    }),
+
   ],
   preview: {
     select: {

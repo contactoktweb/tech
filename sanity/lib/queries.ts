@@ -57,7 +57,10 @@ export const homeGuaranteesQuery = groq`*[_type == "homeGuarantees"][0]{
 export const homeServicesQuery = groq`*[_type == "homeServices"][0]{
   title,
   subtitle,
-  categories
+  categories,
+  hrConsultingTitle,
+  hrConsultingDescription,
+  hrConsultingFeatures
 }`
 
 export const homeSoftwareQuery = groq`*[_type == "homeSoftware"][0]{
@@ -163,8 +166,5 @@ export const aboutPageQuery = groq`*[_type == "aboutPage"][0]{
     name,
     role,
     image
-  },
-  hrConsultingTitle,
-  hrConsultingDescription,
-  hrConsultingFeatures
+  }
 }`

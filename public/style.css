@@ -1038,8 +1038,9 @@ button {
 
 .guarantee-graphic svg {
     width: 100%;
-    max-width: 300px;
+    max-width: 180px;
     color: var(--color-white);
+    transform: translateY(-30px);
 }
 
 /* ============================================

@@ -1,4 +1,6 @@
 import { Resend } from 'resend';
+import { client } from '@/sanity/lib/client';
+import { settingsQuery } from '@/sanity/lib/queries';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -31,9 +33,21 @@ export const sendAdminNotification = async (data: any) => {
   const { x_ref_payco, x_amount, x_currency_code, x_description } = data;
 
   try {
+    let adminEmail = process.env.ADMIN_EMAIL;
+    try {
+      const settings = await client.fetch(settingsQuery);
+      if (settings?.emailAdmin) {
+        adminEmail = settings.emailAdmin;
+      }
+    } catch (err) {
+      console.warn('No se pudo consultar el correo de admin en Sanity, usando fallback:', err);
+    }
+
+    const recipient = adminEmail || 'ventas@fangantech.com.co';
+
     await resend.emails.send({
       from: 'Fangan Tech <notificaciones@fangantech.com.co>',
-      to: process.env.ADMIN_EMAIL || 'ventas@fangantech.com.co',
+      to: recipient,
       subject: `🔔 NUEVO PEDIDO CONFIRMADO: #${x_ref_payco}`,
       html: `
         <div style="${BRUTALIST_STYLE}">

@@ -87,5 +87,11 @@ export const settingsType = defineType({
       type: 'string',
       description: 'El correo electrónico donde llegarán las notificaciones de nuevas PQR',
     }),
+    defineField({
+      name: 'emailAdmin',
+      title: 'Correo de Notificaciones Administrador',
+      type: 'string',
+      description: 'El correo electrónico del administrador para recibir notificaciones de ventas y sistema',
+    }),
   ],
 })

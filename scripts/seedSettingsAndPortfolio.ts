@@ -47,6 +47,7 @@ const seedSettingsAndPortfolio = async () => {
         tiktok: 'https://tiktok.com/@fangantech',
       },
       emailPqr: 'ventas@fangantech.com.co',
+      emailAdmin: 'ventas@fangantech.com.co',
     }
 
     await client.createOrReplace(settingsDoc)

@@ -10,7 +10,8 @@ export const settingsQuery = groq`*[_type == "settings"][0]{
   redesSociales,
   googleMaps,
   googleMapsUrl,
-  emailPqr
+  emailPqr,
+  emailAdmin
 }`
 
 // Secciones de la Página de Inicio
